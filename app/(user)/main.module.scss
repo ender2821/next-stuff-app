@@ -1,0 +1,50 @@
+@import '../../styles/vars.scss';
+
+.main {
+  background: url('../../assets/schit-bg.png') center center repeat;
+  min-height: calc(100vh - 6rem);
+}
+
+.homeLinks {
+  bottom: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 1rem;
+  position: relative;
+  width: 100%;
+
+  @media screen and (min-width: $small) {
+    margin: 0 auto;
+    max-width: 1200px;
+    width: 100%;
+  }
+
+  a {
+    align-items: center;
+    background: $mainElementBg;
+    border-radius: 10px;
+    color: $mainText;
+    display: flex;
+    font-weight: 700;
+    height: calc(50vw - 1rem);
+    justify-content: center;
+    letter-spacing: 1px;
+    padding: 2rem;
+    text-transform: uppercase;
+
+    @media screen and (min-width: $small) {
+      height: auto;
+    }
+  }
+}
+
+.container {
+  @media screen and (min-width: $small) {
+    margin: 0 auto;
+    max-width: 1200px;
+    width: 100%;
+  }
+}

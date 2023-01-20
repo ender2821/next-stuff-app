@@ -1,0 +1,10 @@
+
+@import '../../styles/vars.scss';
+
+.header {
+  align-items: center;
+  background: $mainElementBg;
+  displaY: flex;
+  justify-content: center;
+  height: 6rem;
+}
