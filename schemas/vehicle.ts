@@ -4,7 +4,7 @@ export default {
   type: 'document',
   fields: [
     {
-      name: "vehicleName",
+      name: "name",
       title: "Name",
       type: "string"
     },
@@ -23,7 +23,7 @@ export default {
       type: "string"
     },
     {
-      name: "vehicleImage",
+      name: "image",
       title: "Image",
       type: "image",
       options: {
