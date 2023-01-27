@@ -7,5 +7,11 @@ $lightBlue: #13678A;
 $darkBlue: #012030;
 $lightGreen: #DAFDBA;
 
-$mainElementBg: $lightBlue;
-$mainText: $lightGreen;
+$color1: $lightBlue; 
+$color2: $darkBlue;
+$color3: $lightGreen;
+
+$mainElementBg: $color1;
+$mainText: $color3;
+$secondaryPageBg: $color3;
+$secondaryText: $color2;

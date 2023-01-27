@@ -7,5 +7,6 @@ type Base = {
 }
 
 interface Vehicle extends Base {
-  
+  name: string,
+  image: Image
 }

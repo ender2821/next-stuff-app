@@ -5,6 +5,10 @@
   min-height: calc(100vh - 6rem);
 }
 
+.mainSecondary {
+  background: $secondaryPageBg;
+}
+
 .homeLinks {
   bottom: 0;
   display: grid;

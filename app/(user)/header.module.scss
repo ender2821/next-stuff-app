@@ -7,4 +7,44 @@
   displaY: flex;
   justify-content: center;
   height: 6rem;
+  position: relative;
+}
+
+.title {
+  align-items: center;
+  display: flex;
+  padding: 0 4rem;
+
+  a {
+    display: flex;
+  }
+}
+
+.titleText {
+  color: $mainText;
+  text-transform: uppercase;
+  font-size: 2.6rem;
+  font-weight: 700;
+  margin-left: 1rem;
+}
+
+.headerSecondary {
+  background: $secondaryPageBg;
+
+  .titleText {
+    color: $secondaryText;
+  }
+}
+
+.backButton {
+  background: none;
+  border: none;
+  align-items: center;
+  displaY: flex;
+  height: 4rem;
+  justify-content: center;
+  lefT: 0;
+  position: absolute;
+  top: 1rem;
+  width: 4rem;
 }

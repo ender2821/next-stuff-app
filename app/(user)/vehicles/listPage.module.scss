@@ -1,0 +1,47 @@
+@import '../../../styles/vars.scss';
+
+.itemList {
+  list-style: none;
+  margin: 0;
+  padding: 1rem;
+}
+
+.listItem {
+  align-items: center;
+  background: $mainElementBg;
+  border-radius: 5px;
+  display: flex;
+  padding: 1rem;
+  p{
+    color: $mainText;
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  button {
+    background: none;
+    border:none;
+    cursor: pointer;
+    margin-left: auto;
+  }
+}
+
+.imageContain {
+  border-radius: 5px;
+  height: 8rem;
+  overflow: hidden;
+  position: relative;
+  width: 8rem;
+
+  img {
+    object-fit: cover;
+  }
+}
+
+.content {
+  align-items: center;
+  display: flex;
+  flex: 1 0 auto;
+  padding-left: 2rem;
+}

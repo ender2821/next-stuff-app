@@ -1,0 +1,15 @@
+@import '../../../../styles/vars.scss';
+
+.imageContain {
+  position: relative;
+  min-height: 300px;
+  width: 100%;
+
+  img {
+    object-fit: cover;
+  }
+  @media screen and (min-width: $small) {
+    max-width: 400px;
+    width: 100%;
+  }
+}
