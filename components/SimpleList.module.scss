@@ -1,0 +1,76 @@
+@import '../styles/vars.scss';
+
+.list {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: 1fr;
+  margin: 1rem;
+
+  @media screen and (min-width: $small) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.listItem {
+  align-items: center;
+  background: $secondaryElementBg;
+  border-radius: 5px;
+  display: flex;
+  padding: 0.25rem 0 0.5rem 1rem;
+
+  form {
+    align-items: center;
+    display: flex;
+    width: 100%;
+  }
+}
+
+.content {
+  flex: 1 0 auto;
+}
+
+.label {
+  color: $labelColor;
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 500;
+  line-height: 2.2rem;
+  margin-top: 1rem;
+  text-transform: capitalize;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+.text {
+  font-weight: 600;
+}
+
+.inputContain {
+  flex: 1 0 auto;
+  padding: 0.5rem 0;
+
+  input {
+    background: none;
+    border: none;
+    border-bottom: 1px solid $inputBorderColor;
+    font-size: 1.6rem;
+    font-weight: 600;
+    max-width: 300px;
+    padding: 0.5rem 0.5rem 0.5rem 0;
+    width: 100%;
+  }
+}
+
+.delete, .submit {
+  align-items: center;
+  background: none;
+  border: none;
+  display: flex;
+  height: 40px;
+  justify-content: center;
+  padding: 0;
+  margin-left: auto;
+  width: 40px;
+}

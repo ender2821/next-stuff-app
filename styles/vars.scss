@@ -5,13 +5,23 @@ $small: 768px;
 
 $lightBlue: #13678A;
 $darkBlue: #012030;
+$darkBlue10: rgba(1,32,48, 0.1);
 $lightGreen: #DAFDBA;
+$green75: rgba(156,237,165, 0.75);
 
 $color1: $lightBlue; 
 $color2: $darkBlue;
 $color3: $lightGreen;
+$color4: $green75;
+$color5: $lightBlue;
+$color6: $darkBlue10;
 
 $mainElementBg: $color1;
 $mainText: $color3;
 $secondaryPageBg: $color3;
 $secondaryText: $color2;
+$secondaryElementBg: $color4;
+$secondaryIconContainBg: $color6;
+
+$labelColor: $color5;
+$inputBorderColor: $color5;

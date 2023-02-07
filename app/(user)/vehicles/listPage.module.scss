@@ -1,9 +1,16 @@
 @import '../../../styles/vars.scss';
 
 .itemList {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: 1fr;
   list-style: none;
   margin: 0;
   padding: 1rem;
+
+  @media screen and (min-width: $small) {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 .listItem {

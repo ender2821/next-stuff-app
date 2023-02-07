@@ -13,12 +13,12 @@ export default {
       title: "Slug",
       type: "slug",
       options: {
-        source: "vehicleName",
+        source: "name",
         maxLength: 96
       }
     },
     {
-      name: "vehicleDescription",
+      name: "description",
       title: "Description",
       type: "string"
     },
@@ -31,37 +31,37 @@ export default {
       }
     },
     {
-      name: "vehicleInfoList",
-      title: "Info List",
+      name: "infoList",
+      title: "Info",
       type: "array",
       of: [
         {
           type: "object",
           fields: [
             {
-              name: "vehiclInfoItem",
-              title: "Item",
-              type: "string"
-            },
-            {
-              name: "vehiclInfoItemLabel",
+              name: "label",
               title: "Label",
               type: "string"
             },
+            {
+              name: "item",
+              title: "Item",
+              type: "string"
+            },
           ]
         }
       ]
     },
     {
-      name: "vehicleToDoList",
-      title: "To Do List",
+      name: "toDoList",
+      title: "To Do",
       type: "array",
       of: [
         {
           type: "object",
           fields: [
             {
-              name: "vehiclToDoItem",
+              name: "item",
               title: "Item",
               type: "string"
             }
@@ -70,16 +70,16 @@ export default {
       ]
     },
     {
-      name: "vehicleSpecList",
-      title: "Spec List",
+      name: "specList",
+      title: "Specs",
       type: "array",
       of: [
         {
           type: "object",
           fields: [
             {
-              name: "vehiclSpec",
-              title: "Spec",
+              name: "item",
+              title: "Item",
               type: "string"
             }
           ]
@@ -87,35 +87,35 @@ export default {
       ]
     },
     {
-      name: "vehicleToBuyList",
-      title: "To Buy List",
+      name: "toBuyList",
+      title: "To Buy",
       type: "array",
       of: [
         {
           type: "object",
           fields: [
             {
-              name: "vehicleToBuyItem",
+              name: "item",
               title: "Item",
               type: "string"
             },
             {
-              name: "vehicleToBuyItemPrice",
+              name: "price",
               title: "Price",
               type: "string"
             },
             {
-              name: "vehicleToBuyItemDescription",
+              name: "description",
               title: "Description",
               type: "string"
             },
             {
-              name: "vehicleToBuyItemLink",
+              name: "link",
               title: "Link",
               type: "string"
             },
             {
-              name: "vehicleItemImage",
+              name: "image",
               title: "Image",
               type: "image",
               options: {

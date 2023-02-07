@@ -8,5 +8,12 @@ type Base = {
 
 interface Vehicle extends Base {
   name: string,
-  image: Image
+  image: Image,
+  infoList: Array<InfoList>,
+  description?: string,
+}
+
+interface InfoList {
+  infoLabel: string,
+  infoItem: string,
 }
