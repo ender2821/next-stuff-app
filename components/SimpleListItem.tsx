@@ -8,18 +8,20 @@ type PageProps = {
   label?: string;
   item: string;
   id: string;
+  itemKey: string;
   onSubmit: (id:string, text:string, label?: string) => void;
+  onDelete: (key: string) => void;
 }
 
 export default function SimpleListItem(props:PageProps) {
-  const { label, item, onSubmit, id } = props;
+  const { label, item, onSubmit, id, itemKey, onDelete } = props;
 
   const [formLabel, setFormLabel] = useState('');
   const [formText, setFormText] = useState('');
 
   // TODO: see if this can be refactored as a hook 
   const [expanded, setExpanded] = useState(false);
-  const ref = useRef<HTMLLIElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent): void => {
@@ -42,45 +44,56 @@ export default function SimpleListItem(props:PageProps) {
     label && setFormLabel(label);
   }, [item, label]);
 
-  const handleLabelChange = (event) => {
+  const handleLabelChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setFormLabel(value)
   }
 
-  const handleTextChange = (event) => {
+  const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setFormText(value)
   }
 
   const onFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    onSubmit(id, formText, label && formLabel);
+    onSubmit(itemKey, formText, label && formLabel);
   }
 
+  const onFormDelete = () => {
+    onDelete(itemKey)
+  }
+
+  console.log(item)
+
   return (
-    <li className={styles.listItem} ref={ref} onClick={() => setExpanded(true)} >
-      {expanded ? (
-        <form onSubmit={onFormSubmit}>
-          <div className={styles.inputContain}  id="form">
-            {label && 
-              <>
-                <label htmlFor="label" className={styles.label} >Label</label>
-                <input id="label" name="label" value={formLabel} onChange={handleLabelChange}/>
-              </>
-            }
-            <label htmlFor="text" className={styles.label} >Text</label>
-            <input id="text" name="text" value={formText} onChange={handleTextChange}/>
-          </div>
-          <button className={styles.submit} type="submit" ><SubmitIcon /></button>
-        </form>
-      ) : (
-        <>
-          <div className={styles.content}>
-            <label className={styles.label}>{label}</label>
-            <p className={styles.text}>{item}</p>
-          </div>
-          <button className={styles.delete} onClick={() => alert('delete')}><DeleteIcon /></button>
-        </>
+    <li className={styles.listItem} >
+      <div className={styles.formContain} ref={ref} onClick={() => setExpanded(true)}>
+        {expanded ? (
+          <form onSubmit={onFormSubmit}>
+            <div className={styles.inputContain}  id="form">
+              {label && 
+                <>
+                  <label htmlFor="label" className={styles.label} >Label</label>
+                  <input id="label" name="label" value={formLabel} onChange={handleLabelChange}/>
+                </>
+              }
+              <label htmlFor="text" className={styles.label} >Text</label>
+              <input id="text" name="text" value={formText} onChange={handleTextChange}/>
+            </div>
+            <button className={styles.submit} type="submit" ><SubmitIcon /></button>
+          </form>
+        ) : (
+          <>
+            <div className={styles.content}>
+              <label className={styles.label}>{label}</label>
+              <p className={styles.text}>{item}</p>
+            </div>
+          </>
+          )
+        }
+      </div>
+      {!expanded && (
+          <button className={styles.delete} onClick={onFormDelete}><DeleteIcon /></button>
         )
       }
     </li>

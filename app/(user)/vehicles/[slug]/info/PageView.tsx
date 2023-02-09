@@ -8,6 +8,9 @@ import appContext from '../../../../../lib/appContext'
 import styles from './page.module.scss';
 import SimpleList from "../../../../../components/SimpleList";
 import SubmitIcon from '../../../../../assets/submit-icon.svg';
+// import router from "next/router";
+import { useRouter, usePathname } from 'next/navigation';
+
 
 type PageProps = {
   data: Vehicle,
@@ -16,6 +19,8 @@ type PageProps = {
 export default function PageView(props:PageProps) {
   const { data } = props
   const { setSecondaryLayout, setTitleText } = useContext(appContext);
+  const router = useRouter();
+  const path = usePathname();
 
   useEffect(() => {
     setSecondaryLayout(true);
@@ -38,9 +43,25 @@ export default function PageView(props:PageProps) {
     };
   }, []);
 
-  const onSubmit = (id: string, text: string, label?: string,) => {
-    console.log(id, text, label && label);
+
+
+  const onSubmit = (key: string, text: string, label?: string,) => {
+    console.log(key, text, label && label);
+
+    const handleSubmit = async() => {
+    
+      await fetch('/api/_updateList', {
+        method: 'post',
+        body: JSON.stringify({ _id: data?._id, key: key, label: label, text: text }),
+      }).then(() => {
+        router.replace(path as string);
+      }).catch((error) => console.log(error));
+    
+    };
+    handleSubmit()
   }
+
+  console.log(data)
 
   return (
     <>
@@ -65,7 +86,7 @@ export default function PageView(props:PageProps) {
           </>
         )}
       </div>
-      <SimpleList data={data?.infoList} onSubmit={onSubmit} />
+      <SimpleList data={data?.infoList} id={data?._id} onSubmit={onSubmit} />
     </>
   )
 }
