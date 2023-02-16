@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { SetStateAction, useContext, useEffect, useRef, useState } from "react";
 import Image  from 'next/image';
 import urlFor from '../../../../../lib/urlFor'
 import appContext from '../../../../../lib/appContext'
@@ -34,7 +34,7 @@ export default function PageView(props:PageProps) {
   // TODO: see if this can be refactored as a hook 
   const [expanded, setExpanded] = useState(false);
   const [imageOverlay, setImageOverlay] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLFormElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -67,13 +67,13 @@ export default function PageView(props:PageProps) {
 
   useEffect(() => {
     if(images.length < 1) return;
-    let newImageURLs = [];
+    let newImageURLs: any = [];
     images.forEach( image => newImageURLs.push(URL.createObjectURL(image)));
     setImageURLs(newImageURLs);
   }, [images]);
 
   function onImageChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setImages([...e.target.files])
+    setImages([...e.target.files as any ] as SetStateAction<never[]>)
   };
 
   const onImageSubmit = async() => {
@@ -92,6 +92,39 @@ export default function PageView(props:PageProps) {
       setImages([]);
       setImageURLs([]);
     }).catch((error) => console.log(error));
+  }
+
+
+  // description handling 
+  const [formText, setFormText] = useState('');
+
+  useEffect(() => {
+    setFormText(data?.description as string);
+  }, [data?.description]);
+
+  const handleTextChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const value = event.target.value;
+    setFormText(value)
+  }
+
+  const onDescriptionFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    onDescriptionSubmit(formText);
+  }
+
+  const onDescriptionSubmit = (text: string) => {
+    const handleSubmit = async() => {
+    
+      await fetch('/api/_updateDescription', {
+        method: 'post',
+        body: JSON.stringify({ _id: data?._id, text: text }),
+      }).then(() => {
+        router.replace(path as string);
+        setExpanded(false);
+      }).catch((error) => console.log(error));
+    
+    };
+    handleSubmit()
   }
 
   return (
@@ -128,12 +161,12 @@ export default function PageView(props:PageProps) {
           />
         )}
       </div>
-      <div className={styles.description} ref={ref} onClick={() => setExpanded(true)}>
+      <form className={styles.description} ref={ref} onSubmit={onDescriptionFormSubmit} onClick={() => setExpanded(true)}>
         {expanded ? (
           <>
             <label>Description</label>
-            <textarea/>
-            <button className={styles.submit} onClick={() => alert('submit')}><SubmitIcon /></button>
+            <textarea value={formText} onChange={handleTextChange}/>
+            <button className={styles.submit} type="submit"><SubmitIcon /></button>
           </>
         ) : (
           <>
@@ -141,7 +174,7 @@ export default function PageView(props:PageProps) {
           <p>{data?.description}</p>
           </>
         )}
-      </div>
+      </form>
       <SimpleList data={data?.infoList} id={data?._id}/>
     </>
   )

@@ -1,7 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { NextApiRequest, NextApiResponse } from "next/types";
 import { client } from "../../lib/sanity.client";
-import {basename} from 'path'
 import {createReadStream} from 'fs'
 import formidable from 'formidable';
 
@@ -27,9 +26,7 @@ export default async function imageUploadHandler(req: NextApiRequest, res: NextA
   }
 
   form.parse(req, async(err, fields, files) => {
-    console.log(fields)
     const selectedFile = files.file as unknown as UploadFile;
-    console.log(selectedFile,  "UPLOADED FILE!")
     const response = await client.assets.upload('image', createReadStream(selectedFile.filepath), {
       contentType: selectedFile.mimeType,
       filename: selectedFile.originalFilename,
@@ -47,7 +44,6 @@ export default async function imageUploadHandler(req: NextApiRequest, res: NextA
         })
         .commit()
     });
-    console.log(response)
 
     res.status(200).json({ response })
 

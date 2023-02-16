@@ -39,8 +39,6 @@ export default function SimpleList(props:PageProps) {
     handleAdd();
   }
 
-
-
   return (
     <ul className={styles.list}>
       {data.map((item, i: number) => {
