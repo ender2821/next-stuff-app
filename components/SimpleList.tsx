@@ -1,17 +1,17 @@
 import { useRouter, usePathname } from 'next/navigation';
 
+import AddIcon from '../assets/add-icon.svg';
 import styles from './SimpleList.module.scss';
 
 import SimpleListItem from './SimpleListItem';
 
 type PageProps = {
   data: Array<any>
-  onSubmit: (id:string, text:string, label?: string) => void;
   id: string;
 }
 
 export default function SimpleList(props:PageProps) {
-  const { data, onSubmit, id } = props;
+  const { data, id } = props;
   const router = useRouter();
   const path = usePathname();
 
@@ -39,16 +39,16 @@ export default function SimpleList(props:PageProps) {
     handleAdd();
   }
 
-  console.log(data)
+
 
   return (
     <ul className={styles.list}>
       {data.map((item, i: number) => {
         return(
-          <SimpleListItem label={item?.label} key={i} itemKey={item?._key} item={item?.item} id={id} onSubmit={onSubmit} onDelete={onDelete} />
+          <SimpleListItem label={item?.label} key={i} itemKey={item?._key} item={item?.item} id={id} onDelete={onDelete} />
         );
       })}
-      <button onClick={onAdd}>Add New Item</button>
+      <button onClick={onAdd} className={styles.addButton}><AddIcon/></button>
     </ul>
   )
 }

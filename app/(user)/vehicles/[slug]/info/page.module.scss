@@ -3,6 +3,7 @@
 .imageContain {
   position: relative;
   min-height: 300px;
+  position: relative;
   width: 100%;
 
   img {
@@ -60,4 +61,67 @@
   margin-left: auto;
   top: 0;
   width: 40px;
+}
+
+.overlay {
+  align-items: center;
+  background: $darkBlue60;
+  bottom: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 2;
+
+  label {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 3;
+  }
+
+  p {
+    margin-top: 1rem;
+    text-align: center;
+  }
+
+  input {
+    position: absolute;
+    left: -9999px;
+    opacity: 0;
+  }
+
+  .titleContain {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .iconContain {
+    display: flex;
+    flex: 1 0 100%;
+    justify-content: center;
+  }
+
+  p {
+    color: $color3;
+    font-size: 2.4rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+}
+
+.photoSubmitButton {
+  background: none;
+  border: none;
+  bottom: 1rem;
+  position: absolute;
+  right: 1rem;
+  z-index: 4;
 }

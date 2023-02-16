@@ -4,17 +4,20 @@ import styles from './SimpleList.module.scss';
 import DeleteIcon from '../assets/secondary-delete-icon.svg';
 import SubmitIcon from '../assets/submit-icon.svg';
 
+import { useRouter, usePathname } from 'next/navigation';
+
 type PageProps = {
   label?: string;
   item: string;
   id: string;
   itemKey: string;
-  onSubmit: (id:string, text:string, label?: string) => void;
   onDelete: (key: string) => void;
 }
 
 export default function SimpleListItem(props:PageProps) {
-  const { label, item, onSubmit, id, itemKey, onDelete } = props;
+  const { label, item, id, itemKey, onDelete } = props;
+  const router = useRouter();
+  const path = usePathname();
 
   const [formLabel, setFormLabel] = useState('');
   const [formText, setFormText] = useState('');
@@ -59,11 +62,24 @@ export default function SimpleListItem(props:PageProps) {
     onSubmit(itemKey, formText, label && formLabel);
   }
 
+  const onSubmit = (key: string, text: string, label?: string,) => {
+    const handleSubmit = async() => {
+    
+      await fetch('/api/_updateList', {
+        method: 'post',
+        body: JSON.stringify({ _id: id, key: key, label: label, text: text }),
+      }).then(() => {
+        router.replace(path as string);
+        setExpanded(false);
+      }).catch((error) => console.log(error));
+    
+    };
+    handleSubmit()
+  }
+
   const onFormDelete = () => {
     onDelete(itemKey)
   }
-
-  console.log(item)
 
   return (
     <li className={styles.listItem} >
