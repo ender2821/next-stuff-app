@@ -74,7 +74,7 @@ export default function PageView(props:PageProps) {
             href={`/vehicles/${slug}/specs`}
           >
             <span className={styles.iconContain}><SpecsIcon /></span>
-            <span className={styles.text}>Sciht specs</span>
+            <span className={styles.text}>Schit specs</span>
           </Link>
         </li>
       </ul>

@@ -8,10 +8,11 @@ import SimpleListItem from './SimpleListItem';
 type PageProps = {
   data: Array<any>
   id: string;
+  listName: string;
 }
 
 export default function SimpleList(props:PageProps) {
-  const { data, id } = props;
+  const { data, id, listName } = props;
   const router = useRouter();
   const path = usePathname();
 
@@ -19,7 +20,7 @@ export default function SimpleList(props:PageProps) {
     const handleDelete = async() => {
         await fetch('/api/_deleteListItem', {
           method: 'post',
-          body: JSON.stringify({ _id: id, key: key}),
+          body: JSON.stringify({ _id: id, key: key, name: listName}),
         }).then(() => {
           router.replace(path as string);
         }).catch((error) => console.log(error));
@@ -29,9 +30,10 @@ export default function SimpleList(props:PageProps) {
 
   const onAdd = () => {
     const handleAdd = async() => {
+
         await fetch('/api/_addListItem', {
           method: 'post',
-          body: JSON.stringify({ _id: id}),
+          body: JSON.stringify({ _id: id, name: listName, label: data && data[0]?.label ? 'New Item' : undefined}),
         }).then(() => {
           router.replace(path as string);
         }).catch((error) => console.log(error));
@@ -41,11 +43,15 @@ export default function SimpleList(props:PageProps) {
 
   return (
     <ul className={styles.list}>
-      {data.map((item, i: number) => {
-        return(
-          <SimpleListItem label={item?.label} key={i} itemKey={item?._key} item={item?.item} id={id} onDelete={onDelete} />
-        );
-      })}
+      {data ? (
+        data?.map((item, i: number) => {
+          return(
+            <SimpleListItem label={item?.label} key={i} itemKey={item?._key} item={item?.item} id={id} onDelete={onDelete} listName={listName}/>
+          );
+        })
+      ) : (
+        <p>Add some schit</p>
+      )}
       <button onClick={onAdd} className={styles.addButton}><AddIcon/></button>
     </ul>
   )

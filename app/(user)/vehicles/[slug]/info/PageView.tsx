@@ -14,7 +14,6 @@ import PhotoUploadIcon from '../../../../../assets/upload-photo-icon.svg';
 // import router from "next/router";
 import { useRouter, usePathname } from 'next/navigation';
 
-
 type PageProps = {
   data: Vehicle,
 }
@@ -175,7 +174,7 @@ export default function PageView(props:PageProps) {
           </>
         )}
       </form>
-      <SimpleList data={data?.infoList} id={data?._id}/>
+      <SimpleList data={data?.infoList as List[]} listName={'infoList'} id={data?._id}/>
     </>
   )
 }

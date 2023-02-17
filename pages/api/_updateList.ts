@@ -11,18 +11,18 @@ client.config ({
 
 
 export default async function favoriteButtonHandler(req: NextApiRequest, res: NextApiResponse) {
-  const { _id, key, label, text } = JSON.parse(req.body);
+  const { _id, key, label, text, name} = JSON.parse(req.body);
 
   
   if ( label ) {
-    const itemKey = `infoList[_key=="${key}"].item`;
+    const itemKey = `${name}[_key=="${key}"].item`;
     const labelKey = `infoList[_key=="${key}"].label`;
     const itemToUpdate = {[itemKey]: text, [labelKey]: label};
 
     const data = await client.patch(_id).set(itemToUpdate).commit().catch((error) => console.log(error))
     res.status(200).json({ data })
   } else {
-    const itemKey = `infoList[_key=="${key}"].item`;
+    const itemKey = `${name}[_key=="${key}"].item`;
     const itemToUpdate = {[itemKey]: text};
 
     const data = await client.patch(_id).set(itemToUpdate).commit().catch((error) => console.log(error))

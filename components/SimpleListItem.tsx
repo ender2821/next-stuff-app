@@ -11,11 +11,12 @@ type PageProps = {
   item: string;
   id: string;
   itemKey: string;
+  listName: string;
   onDelete: (key: string) => void;
 }
 
 export default function SimpleListItem(props:PageProps) {
-  const { label, item, id, itemKey, onDelete } = props;
+  const { label, item, id, itemKey, listName, onDelete } = props;
   const router = useRouter();
   const path = usePathname();
 
@@ -67,7 +68,7 @@ export default function SimpleListItem(props:PageProps) {
     
       await fetch('/api/_updateList', {
         method: 'post',
-        body: JSON.stringify({ _id: id, key: key, label: label, text: text }),
+        body: JSON.stringify({ _id: id, key: key, label: label, text: text, name: listName}),
       }).then(() => {
         router.replace(path as string);
         setExpanded(false);
@@ -93,7 +94,7 @@ export default function SimpleListItem(props:PageProps) {
                   <input id="label" name="label" value={formLabel} onChange={handleLabelChange}/>
                 </>
               }
-              <label htmlFor="text" className={styles.label} >Text</label>
+              {label && <label htmlFor="text" className={styles.label} >Text</label>}
               <input id="text" name="text" value={formText} onChange={handleTextChange}/>
             </div>
             <button className={styles.submit} type="submit" ><SubmitIcon /></button>

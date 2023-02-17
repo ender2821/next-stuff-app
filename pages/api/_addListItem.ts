@@ -9,7 +9,7 @@ client.config ({
 });
 
 export default async function favoriteButtonHandler(req: NextApiRequest, res: NextApiResponse) {
-  const { _id} = JSON.parse(req.body);
+  const { _id, name, label} = JSON.parse(req.body);
 
   function makeKey(length: number) {
     let result = '';
@@ -23,7 +23,14 @@ export default async function favoriteButtonHandler(req: NextApiRequest, res: Ne
     return result;
   }
 
-  const newItem = [{ _key: makeKey(12), item: '', label: 'New item' }]
-  const data = await client.patch(_id).append('infoList', newItem).commit().catch((error) => console.log(error))
-  res.status(200).json({ data })
+
+  if(label) {
+    const newItem = [{ _key: makeKey(12), item: '', label: 'New item' }]
+    const data = await client.patch(_id).setIfMissing({[name]: []}).append(name, newItem).commit().catch((error) => console.log(error))
+    res.status(200).json({ data })
+  } else {
+    const newItem = [{ _key: makeKey(12), item: ''}]
+    const data = await client.patch(_id).setIfMissing({[name]: []}).append(name, newItem).commit().catch((error) => console.log(error))
+    res.status(200).json({ data })
+  }
 }

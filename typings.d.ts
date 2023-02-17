@@ -9,11 +9,13 @@ type Base = {
 interface Vehicle extends Base {
   name: string,
   image: Image,
-  infoList: Array<InfoList>,
+  infoList?: Array<List>,
+  toDoList?: Array<List>,
+  specList?: Array<List>,
   description?: string,
 }
 
-interface InfoList {
-  infoLabel: string,
-  infoItem: string,
+interface List {
+  label: string,
+  item: string,
 }
