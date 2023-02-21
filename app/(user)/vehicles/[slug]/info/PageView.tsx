@@ -13,6 +13,7 @@ import PhotoUploadIcon from '../../../../../assets/upload-photo-icon.svg';
 
 // import router from "next/router";
 import { useRouter, usePathname } from 'next/navigation';
+import useClickOutside from "../../../../../hooks/useClickOutside";
 
 type PageProps = {
   data: Vehicle,
@@ -24,42 +25,13 @@ export default function PageView(props:PageProps) {
   const router = useRouter();
   const path = usePathname();
 
+  const { expanded: formExpanded, setExpanded: formSetExpanded, ref: formRef } = useClickOutside<HTMLFormElement>();
+  const { expanded: imageExpanded, setExpanded: imageSetExpanded, ref: imageRef } = useClickOutside<HTMLDivElement>();
+
   useEffect(() => {
     setSecondaryLayout(true);
     setTitleText(data?.name);
   }, [data?.name, setSecondaryLayout, setTitleText])
-
-
-  // TODO: see if this can be refactored as a hook 
-  const [expanded, setExpanded] = useState(false);
-  const [imageOverlay, setImageOverlay] = useState(false);
-  const ref = useRef<HTMLFormElement>(null);
-  const imageRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent): void => {
-      if (ref.current && !ref.current.contains(event.target as Node)) {
-        setExpanded(false);
-      }
-    };
-    document.addEventListener('click', handleClickOutside, true);
-    return () => {
-      document.removeEventListener('click', handleClickOutside, true);
-    };
-  }, []);
-
-  useEffect(() => {
-    const handleImageClickOutside = (event: MouseEvent): void => {
-      if (imageRef.current && !imageRef.current.contains(event.target as Node)) {
-        setImageOverlay(false);
-      }
-    };
-    document.addEventListener('click', handleImageClickOutside, true);
-    return () => {
-      document.removeEventListener('click', handleImageClickOutside, true);
-    };
-  }, []);
-  //
 
   const [images, setImages] = useState([]);
   const [imageURLs, setImageURLs] = useState([]);
@@ -119,7 +91,7 @@ export default function PageView(props:PageProps) {
         body: JSON.stringify({ _id: data?._id, text: text }),
       }).then(() => {
         router.replace(path as string);
-        setExpanded(false);
+        formSetExpanded(false);
       }).catch((error) => console.log(error));
     
     };
@@ -128,9 +100,9 @@ export default function PageView(props:PageProps) {
 
   return (
     <>
-      <div className={styles.imageContain} onClick={() => setImageOverlay(true)}>
+      <div className={styles.imageContain} onClick={() => imageSetExpanded(true)}>
         
-        {imageOverlay && (
+        {imageExpanded && (
           <div className={styles.overlay} ref={imageRef}>
             { images.length == 0 && (
               <div className={styles.titleContain}>
@@ -160,8 +132,8 @@ export default function PageView(props:PageProps) {
           />
         )}
       </div>
-      <form className={styles.description} ref={ref} onSubmit={onDescriptionFormSubmit} onClick={() => setExpanded(true)}>
-        {expanded ? (
+      <form className={styles.description} ref={formRef} onSubmit={onDescriptionFormSubmit} onClick={() => formSetExpanded(true)}>
+        {formExpanded ? (
           <>
             <label>Description</label>
             <textarea value={formText} onChange={handleTextChange}/>
