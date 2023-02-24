@@ -8,7 +8,7 @@ import SimpleListItem from './SimpleListItem';
 type PageProps = {
   data: Array<any>
   id: string;
-  listName: string;
+  listName: 'infoList' | 'toDoList' | 'specList' | 'toBuyList' | 'ownedList';
 }
 
 export default function SimpleList(props:PageProps) {
@@ -43,10 +43,10 @@ export default function SimpleList(props:PageProps) {
 
   return (
     <ul className={styles.list}>
-      {data ? (
+      {data && data.length > 0 ? (
         data?.map((item, i: number) => {
           return(
-            <SimpleListItem label={item?.label} key={i} itemKey={item?._key} item={item?.item} id={id} onDelete={onDelete} listName={listName}/>
+            <SimpleListItem {...item} key={i} itemKey={item?._key} id={id} onDelete={onDelete} listName={listName}/>
           );
         })
       ) : (
