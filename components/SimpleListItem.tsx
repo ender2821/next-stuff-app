@@ -2,11 +2,13 @@ import { useEffect, useRef, useState } from "react";
 
 import styles from "./SimpleList.module.scss";
 import DeleteIcon from "../assets/secondary-delete-icon.svg";
+import ExternalLinkIcon from "../assets/external-link-icon.svg";
 import SubmitIcon from "../assets/submit-icon.svg";
+import PhotoUploadIcon from "../assets/photo-icon-dark.svg";
 
 import { useRouter, usePathname } from "next/navigation";
 import useClickOutside from "../hooks/useClickOutside";
-import Image from "next/image"
+import Image from "next/image";
 import Link from "next/link";
 import urlFor from "../lib/urlFor";
 
@@ -24,7 +26,18 @@ type PageProps = {
 };
 
 export default function SimpleListItem(props: PageProps) {
-  const { label, item, id, itemKey, listName, description, price, link, image, onDelete } = props;
+  const {
+    label,
+    item,
+    id,
+    itemKey,
+    listName,
+    description,
+    price,
+    link,
+    image,
+    onDelete,
+  } = props;
   const router = useRouter();
   const path = usePathname();
 
@@ -35,6 +48,7 @@ export default function SimpleListItem(props: PageProps) {
     callback: () => {
       setFormText(item);
       label && setFormLabel(label);
+      console.log(item.length);
     },
   });
 
@@ -58,10 +72,10 @@ export default function SimpleListItem(props: PageProps) {
   // }, [item, label]);
   //
 
-  useEffect(() => {
-    setFormText(item);
-    label && setFormLabel(label);
-  }, [item, label]);
+  // useEffect(() => {
+  //   setFormText(item);
+  //   label && setFormLabel(label);
+  // }, [item, label]);
 
   const handleLabelChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -113,10 +127,13 @@ export default function SimpleListItem(props: PageProps) {
             onClick={() => setExpanded(true)}
           >
             {expanded ? (
-              <form onSubmit={onFormSubmit}>
+              <form onSubmit={onFormSubmit} className={styles.externalForm}>
                 <div className={styles.externalFormInputs} id="form">
                   <div className={styles.imageContain}>
-                    {/* {imageExpanded && (
+                    {image ? (
+                      <></>
+                    ) : (
+                      /* {imageExpanded && (
                       <div className={styles.overlay} ref={imageRef}>
                         {images.length == 0 && (
                           <div className={styles.titleContain}>
@@ -152,57 +169,78 @@ export default function SimpleListItem(props: PageProps) {
                         alt={data?.name}
                         fill
                       />
-                    )}  */}
+                    )}  */
+                      <div className={styles.photoPlaceholder}>
+                        <PhotoUploadIcon />
+                      </div>
+                    )}
                   </div>
-                  <label htmlFor="title">Title</label>
-                  <input
-                    id="title"
-                    name="title"
-                    value={formText}
-                    onChange={handleTextChange}
-                  />
-                  <label htmlFor="cost">Cost</label>
-                  <input
-                    id="cost"
-                    name="cost"
-                    value={formText}
-                    onChange={handleTextChange}
-                  />
-                  <label htmlFor="description">Description</label>
-                  <input
-                    id="description"
-                    name="description"
-                    value={formText}
-                    onChange={handleTextChange}
-                  />
-                  <label htmlFor="description">Link</label>
-                  <input
-                    id="link"
-                    name="link"
-                    value={formText}
-                    onChange={handleTextChange}
-                  />
+                  <div className={styles.inputsContain}>
+                    <div className={styles.inputContain}>
+                      <label htmlFor="title" className={styles.label}>Title</label>
+                      <input
+                        id="title"
+                        name="title"
+                        value={formText}
+                        onChange={handleTextChange}
+                      />
+                    </div>
+                    <div className={styles.inputContain}>
+                      <label htmlFor="cost" className={styles.label}>Cost</label>
+                      <input
+                        id="cost"
+                        name="cost"
+                        value={formText}
+                        onChange={handleTextChange}
+                      />
+                    </div>
+                    <div className={styles.inputContain}>
+                      <label htmlFor="description" className={styles.label}>Description</label>
+                      <input
+                        id="description"
+                        name="description"
+                        value={formText}
+                        onChange={handleTextChange}
+                      />
+                    </div>
+                    <div className={styles.inputContain}>
+                      <label htmlFor="description" className={styles.label}>Link</label>
+                      <input
+                        id="link"
+                        name="link"
+                        value={formText}
+                        onChange={handleTextChange}
+                      />
+                    </div>
+                  </div>
                 </div>
-                <button className={styles.submit} type="submit">
+                <button className={styles.submitExternal} type="submit">
                   <SubmitIcon />
                 </button>
               </form>
             ) : (
               <>
-                <div className={styles.content}>
+                <div className={styles.externalFormContent}>
                   <div className={styles.imageContain}>
-                    {image && <Image
-                      src={urlFor(image).url()}
-                      alt={item}
-                      height={80}
-                      width={80}
-                    />}
+                    {image ? (
+                      <Image
+                        src={urlFor(image).url()}
+                        alt={item}
+                        height={80}
+                        width={80}
+                      />
+                    ) : (
+                      <div className={styles.photoPlaceholder}>
+                        <PhotoUploadIcon />
+                      </div>
+                    )}
                   </div>
-                  <div>
-                    <p className={styles.text}>{price}</p>
-                    <p className={styles.text}>{item}</p>
+                  <div className={styles.textContain}>
+                    <p className={styles.text}>
+                      {price} {item ? item : "New Item"}
+                    </p>
+                    <p className={styles.text}>{description}</p>
                   </div>
-                  <p className={styles.text}>{description}</p>
                 </div>
               </>
             )}
@@ -213,7 +251,7 @@ export default function SimpleListItem(props: PageProps) {
                 <DeleteIcon />
               </button>
               <Link className={styles.delete} href="/">
-                <DeleteIcon />
+                <ExternalLinkIcon />
               </Link>
             </div>
           )}
@@ -261,7 +299,7 @@ export default function SimpleListItem(props: PageProps) {
               <>
                 <div className={styles.content}>
                   <label className={styles.label}>{label}</label>
-                  <p className={styles.text}>{item}</p>
+                  <p className={styles.text}>{item ? item : "New Item"}</p>
                 </div>
               </>
             )}

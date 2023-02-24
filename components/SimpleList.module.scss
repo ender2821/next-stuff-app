@@ -34,6 +34,33 @@
   }
 }
 
+.textContain {
+  flex: 1 0 auto;
+  padding: 0 1rem;
+}
+
+.inputsContain {
+  width: 100%;
+  label{ 
+    display: block;
+    width: 100%; 
+  }
+  input {
+    display: block;
+    width: 100%;
+  }
+}
+
+.photoPlaceholder {
+  align-items: center;
+  border: 1px solid $color1;
+  border-radius: 5px;
+  display: flex;
+  height: 8rem;
+  justify-content: center;
+  width: 8rem;
+}
+
 .formContain {
   align-items: center;
   display: flex;
@@ -42,6 +69,11 @@
 }
 
 .content {
+  flex: 1 0 auto;
+}
+
+.externalFormContent{
+  display: flex;
   flex: 1 0 auto;
 }
 
@@ -91,6 +123,21 @@
   width: 40px;
 }
 
+.submitExternal {
+  align-items: center;
+  background: none;
+  border: none;
+  display: flex;
+  height: 40px;
+  justify-content: center;
+  margin-left: auto;
+  padding: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 40px;
+}
+
 .addButton {
   background: none;
   border: none;
@@ -99,4 +146,8 @@
   position: fixed;
   right: 1rem;
   width: 4rem;
+}
+
+.externalForm {
+  position: relative;
 }
