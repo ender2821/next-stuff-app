@@ -15,9 +15,9 @@ import urlFor from "../lib/urlFor";
 type PageProps = {
   label?: string;
   image?: any;
-  link?: string;
-  description?: string;
-  price?: string;
+  link: string;
+  description: string;
+  price: string;
   item: string;
   id: string;
   itemKey: string;
@@ -43,12 +43,17 @@ export default function SimpleListItem(props: PageProps) {
 
   const [formLabel, setFormLabel] = useState("");
   const [formText, setFormText] = useState("");
+  const [formPrice, setFormPrice] = useState("");
+  const [formDescription, setFormDescription] = useState("");
+  const [formLink, setFormLink] = useState("");
 
   const { expanded, setExpanded, ref } = useClickOutside<HTMLDivElement>({
     callback: () => {
       setFormText(item);
       label && setFormLabel(label);
-      console.log(item.length);
+      price && setFormPrice(price);
+      description && setFormDescription(description)
+      link && setFormLink(link)
     },
   });
 
@@ -72,10 +77,13 @@ export default function SimpleListItem(props: PageProps) {
   // }, [item, label]);
   //
 
-  // useEffect(() => {
-  //   setFormText(item);
-  //   label && setFormLabel(label);
-  // }, [item, label]);
+  useEffect(() => {
+    setFormText(item);
+    label && setFormLabel(label);
+    price && setFormPrice(price);
+    description && setFormDescription(description)
+    link && setFormLink(link)
+  }, [item, label, price, description, link]);
 
   const handleLabelChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -87,9 +95,29 @@ export default function SimpleListItem(props: PageProps) {
     setFormText(value);
   };
 
+  const handlePriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setFormPrice(value);
+  };
+
+  const handleDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setFormDescription(value);
+  };
+
+  const handleLinkChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setFormLink(value);
+  };
+
   const onFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     onSubmit(itemKey, formText, label && formLabel);
+  };
+
+  const onComplexFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    onComplexSubmit(itemKey, formText, formPrice, formDescription, formLink);
   };
 
   const onSubmit = (key: string, text: string, label?: string) => {
@@ -101,6 +129,29 @@ export default function SimpleListItem(props: PageProps) {
           key: key,
           label: label,
           text: text,
+          name: listName,
+        }),
+      })
+        .then(() => {
+          router.replace(path as string);
+          setExpanded(false);
+        })
+        .catch((error) => console.log(error));
+    };
+    handleSubmit();
+  };
+
+  const onComplexSubmit = (key: string, item: string, price: string, description: string, link: string ) => {
+    const handleSubmit = async () => {
+      await fetch("/api/_updateComplexList", {
+        method: "post",
+        body: JSON.stringify({
+          _id: id,
+          key: key,
+          item: item,
+          price: price,
+          description: description,
+          link: link,
           name: listName,
         }),
       })
@@ -127,7 +178,7 @@ export default function SimpleListItem(props: PageProps) {
             onClick={() => setExpanded(true)}
           >
             {expanded ? (
-              <form onSubmit={onFormSubmit} className={styles.externalForm}>
+              <form onSubmit={onComplexFormSubmit} className={styles.externalForm}>
                 <div className={styles.externalFormInputs} id="form">
                   <div className={styles.imageContain}>
                     {image ? (
@@ -177,10 +228,10 @@ export default function SimpleListItem(props: PageProps) {
                   </div>
                   <div className={styles.inputsContain}>
                     <div className={styles.inputContain}>
-                      <label htmlFor="title" className={styles.label}>Title</label>
+                      <label htmlFor="item" className={styles.label}>Item</label>
                       <input
-                        id="title"
-                        name="title"
+                        id="item"
+                        name="item"
                         value={formText}
                         onChange={handleTextChange}
                       />
@@ -190,8 +241,8 @@ export default function SimpleListItem(props: PageProps) {
                       <input
                         id="cost"
                         name="cost"
-                        value={formText}
-                        onChange={handleTextChange}
+                        value={formPrice}
+                        onChange={handlePriceChange}
                       />
                     </div>
                     <div className={styles.inputContain}>
@@ -199,8 +250,8 @@ export default function SimpleListItem(props: PageProps) {
                       <input
                         id="description"
                         name="description"
-                        value={formText}
-                        onChange={handleTextChange}
+                        value={formDescription}
+                        onChange={handleDescriptionChange}
                       />
                     </div>
                     <div className={styles.inputContain}>
@@ -208,8 +259,8 @@ export default function SimpleListItem(props: PageProps) {
                       <input
                         id="link"
                         name="link"
-                        value={formText}
-                        onChange={handleTextChange}
+                        value={formLink}
+                        onChange={handleLinkChange}
                       />
                     </div>
                   </div>
@@ -250,7 +301,7 @@ export default function SimpleListItem(props: PageProps) {
               <button className={styles.delete} onClick={onFormDelete}>
                 <DeleteIcon />
               </button>
-              <Link className={styles.delete} href="/">
+              <Link className={styles.delete} href={link ? link : ''} target="_blank" rel="noopener noreferrer">
                 <ExternalLinkIcon />
               </Link>
             </div>
