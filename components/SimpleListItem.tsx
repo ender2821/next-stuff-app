@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 
 import styles from "./SimpleList.module.scss";
 import DeleteIcon from "../assets/secondary-delete-icon.svg";
@@ -11,6 +11,7 @@ import useClickOutside from "../hooks/useClickOutside";
 import Image from "next/image";
 import Link from "next/link";
 import urlFor from "../lib/urlFor";
+import useImageHandler from "../hooks/useImageHandler";
 
 type PageProps = {
   label?: string;
@@ -52,10 +53,12 @@ export default function SimpleListItem(props: PageProps) {
       setFormText(item);
       label && setFormLabel(label);
       price && setFormPrice(price);
-      description && setFormDescription(description)
-      link && setFormLink(link)
+      description && setFormDescription(description);
+      link && setFormLink(link);
     },
   });
+
+  const { images, setImages, imageURLs, setImageURLs } = useImageHandler();
 
   // TODO: see if this can be refactored as a hook
   // const [expanded, setExpanded] = useState(false);
@@ -81,9 +84,13 @@ export default function SimpleListItem(props: PageProps) {
     setFormText(item);
     label && setFormLabel(label);
     price && setFormPrice(price);
-    description && setFormDescription(description)
-    link && setFormLink(link)
+    description && setFormDescription(description);
+    link && setFormLink(link);
   }, [item, label, price, description, link]);
+
+  const onImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setImages([...(e.target.files as any)] as SetStateAction<never[]>);
+  };
 
   const handleLabelChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -100,7 +107,9 @@ export default function SimpleListItem(props: PageProps) {
     setFormPrice(value);
   };
 
-  const handleDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleDescriptionChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const value = event.target.value;
     setFormDescription(value);
   };
@@ -141,7 +150,13 @@ export default function SimpleListItem(props: PageProps) {
     handleSubmit();
   };
 
-  const onComplexSubmit = (key: string, item: string, price: string, description: string, link: string ) => {
+  const onComplexSubmit = (
+    key: string,
+    item: string,
+    price: string,
+    description: string,
+    link: string
+  ) => {
     const handleSubmit = async () => {
       await fetch("/api/_updateComplexList", {
         method: "post",
@@ -178,57 +193,34 @@ export default function SimpleListItem(props: PageProps) {
             onClick={() => setExpanded(true)}
           >
             {expanded ? (
-              <form onSubmit={onComplexFormSubmit} className={styles.externalForm}>
+              <form
+                onSubmit={onComplexFormSubmit}
+                className={styles.externalForm}
+              >
                 <div className={styles.externalFormInputs} id="form">
                   <div className={styles.imageContain}>
-                    {image ? (
-                      <></>
-                    ) : (
-                      /* {imageExpanded && (
-                      <div className={styles.overlay} ref={imageRef}>
-                        {images.length == 0 && (
-                          <div className={styles.titleContain}>
-                            <span className={styles.iconContain}>
-                              <PhotoUploadIcon />
-                            </span>
-                            <p>Change Photo</p>
-                          </div>
-                        )}
-                        <label htmlFor="upload"></label>
-                        <input
-                          type="file"
-                          id="upload"
-                          accept="image/*"
-                          onChange={onImageChange}
-                        />
-                        {images.length > 0 && (
-                          <button
-                            onClick={onImageSubmit}
-                            className={styles.photoSubmitButton}
-                          >
-                            <SubmitIconLight />
-                          </button>
-                        )}
-                      </div>
-                    )}
-
                     {images.length > 0 ? (
-                      <Image src={imageURLs[0]} alt={data?.name} fill />
+                      <Image src={imageURLs[0]} alt={item} fill />
+                    ) : image ? (
+                      <Image src={urlFor(image).url()} alt={item} fill />
                     ) : (
-                      <Image
-                        src={urlFor(data?.image).url()}
-                        alt={data?.name}
-                        fill
-                      />
-                    )}  */
                       <div className={styles.photoPlaceholder}>
                         <PhotoUploadIcon />
                       </div>
                     )}
+                    <label htmlFor="upload"></label>
+                    <input
+                      type="file"
+                      id="upload"
+                      accept="image/*"
+                      onChange={onImageChange}
+                    />
                   </div>
                   <div className={styles.inputsContain}>
                     <div className={styles.inputContain}>
-                      <label htmlFor="item" className={styles.label}>Item</label>
+                      <label htmlFor="item" className={styles.label}>
+                        Item
+                      </label>
                       <input
                         id="item"
                         name="item"
@@ -237,7 +229,9 @@ export default function SimpleListItem(props: PageProps) {
                       />
                     </div>
                     <div className={styles.inputContain}>
-                      <label htmlFor="cost" className={styles.label}>Cost</label>
+                      <label htmlFor="cost" className={styles.label}>
+                        Cost
+                      </label>
                       <input
                         id="cost"
                         name="cost"
@@ -246,7 +240,9 @@ export default function SimpleListItem(props: PageProps) {
                       />
                     </div>
                     <div className={styles.inputContain}>
-                      <label htmlFor="description" className={styles.label}>Description</label>
+                      <label htmlFor="description" className={styles.label}>
+                        Description
+                      </label>
                       <input
                         id="description"
                         name="description"
@@ -255,7 +251,9 @@ export default function SimpleListItem(props: PageProps) {
                       />
                     </div>
                     <div className={styles.inputContain}>
-                      <label htmlFor="description" className={styles.label}>Link</label>
+                      <label htmlFor="description" className={styles.label}>
+                        Link
+                      </label>
                       <input
                         id="link"
                         name="link"
@@ -301,7 +299,12 @@ export default function SimpleListItem(props: PageProps) {
               <button className={styles.delete} onClick={onFormDelete}>
                 <DeleteIcon />
               </button>
-              <Link className={styles.delete} href={link ? link : ''} target="_blank" rel="noopener noreferrer">
+              <Link
+                className={styles.delete}
+                href={link ? link : ""}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <ExternalLinkIcon />
               </Link>
             </div>

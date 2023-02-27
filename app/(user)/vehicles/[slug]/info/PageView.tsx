@@ -14,6 +14,7 @@ import PhotoUploadIcon from '../../../../../assets/upload-photo-icon.svg';
 // import router from "next/router";
 import { useRouter, usePathname } from 'next/navigation';
 import useClickOutside from "../../../../../hooks/useClickOutside";
+import useImageHandler from "../../../../../hooks/useImageHandler";
 
 type PageProps = {
   data: Vehicle,
@@ -27,23 +28,14 @@ export default function PageView(props:PageProps) {
 
   const { expanded: formExpanded, setExpanded: formSetExpanded, ref: formRef } = useClickOutside<HTMLFormElement>();
   const { expanded: imageExpanded, setExpanded: imageSetExpanded, ref: imageRef } = useClickOutside<HTMLDivElement>();
+  const { images, setImages, imageURLs, setImageURLs} = useImageHandler();
 
   useEffect(() => {
     setSecondaryLayout(true);
     setTitleText(data?.name);
   }, [data?.name, setSecondaryLayout, setTitleText])
 
-  const [images, setImages] = useState([]);
-  const [imageURLs, setImageURLs] = useState([]);
-
-  useEffect(() => {
-    if(images.length < 1) return;
-    let newImageURLs: any = [];
-    images.forEach( image => newImageURLs.push(URL.createObjectURL(image)));
-    setImageURLs(newImageURLs);
-  }, [images]);
-
-  function onImageChange(e: React.ChangeEvent<HTMLInputElement>) {
+  const onImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setImages([...e.target.files as any ] as SetStateAction<never[]>)
   };
 
