@@ -1,60 +1,119 @@
-'use client';
+"use client";
 
-import React, { useContext, useEffect } from "react";
-import urlFor from '../../../lib/urlFor'
-import Image  from 'next/image';
+import React, { useContext, useEffect, useState } from "react";
+import { useRouter, usePathname } from 'next/navigation';
+import urlFor from "../../../lib/urlFor";
+import Image from "next/image";
 import Link from "next/link";
-import appContext from '../../../lib/appContext'
+import appContext from "../../../lib/appContext";
 
-import DeleteIcon from "../../../assets/delete-icon.svg"
-import styles from './listPage.module.scss';
+import DeleteIcon from "../../../assets/delete-icon.svg";
+import SubmitIcon from "../../../assets/submit-icon-light.svg"
+import AddIcon from '../../../assets/add-icon.svg';
+
+import styles from "./listPage.module.scss";
 
 type ListPage = {
-  slug: {current: string}
+  slug: { current: string };
   name: string;
   image: string;
-}
+};
 
 type PageProps = {
-  data: ListPage[]
-}
+  data: ListPage[];
+};
 
-export default function PageView(props:PageProps){
+export default function PageView(props: PageProps) {
   const { data } = props;
   const { setSecondaryLayout, setTitleText } = useContext(appContext);
+  const [ newItem, setNewItem ] = useState(false)
+  const [ newItemName, setNewItemName ] = useState('');
 
   useEffect(() => {
     setSecondaryLayout(false);
-    setTitleText('vehicles');
-  }, [setSecondaryLayout, setTitleText])
+    setTitleText("vehicles");
+  }, [setSecondaryLayout, setTitleText, data]);
+
+  const router = useRouter();
+  const path = usePathname();
+  
+  const onAddSubmit = async () => {
+    if ( newItemName.length > 0 ) {
+      const id = 'vehicle';
+
+      const slugify = (str: string) => {
+        return str
+        .toLowerCase()
+        .trim()
+        .replace(/[^\w\s-]/g, '')
+        .replace(/[\s_-]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+      }
+
+      await fetch('/api/_addCategory', {
+        method: 'post',
+        body: JSON.stringify({id: id, name: newItemName, slug: slugify(newItemName)}),
+      }).then(() => {
+        setNewItem(false);
+        setNewItemName('');
+        router.replace(path as string);
+      }).catch((error) => console.log(error));
+    } 
+  }
+
+  const handleNewItemNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setNewItemName(value);
+  };
+
   return (
-    <ul className={styles.itemList}>
-      {data.map((item: ListPage, i:number) => {
-        return (
-          <li 
-            key={i} 
-          >
-            <Link
-              href={`/vehicles/${item?.slug?.current}`}
-              className={styles.listItem}
-            >
+    <>
+      <ul className={styles.itemList}>
+        {data.map((item: ListPage, i: number) => {
+          return (
+            <li key={i}>
+              <Link
+                href={`/vehicles/${item?.slug?.current}`}
+                className={styles.listItem}
+              >
+                <div className={styles.imageContain}>
+                  {item?.image && <Image
+                    src={urlFor(item?.image).url()}
+                    alt={item?.name}
+                    fill
+                  />}
+                </div>
+                <div className={styles.content}>
+                  <p>{item?.name}</p>
+                  <button>
+                    <DeleteIcon />
+                  </button>
+                </div>
+              </Link>
+            </li>
+          );
+        })}
+        {newItem && (
+          <li>
+            <div className={styles.listItem}>
               <div className={styles.imageContain}>
-              <Image 
-                src={urlFor(item?.image).url()}
-                alt={item?.name}
-                fill
-              />
+
               </div>
+
               <div className={styles.content}>
-                <p>{item?.name}</p>
-                <button>
-                  <DeleteIcon />
+                <input onChange={handleNewItemNameChange} value={newItemName}/>
+                <button onClick={onAddSubmit}>
+                  <SubmitIcon />
                 </button>
               </div>
-            </Link>
+            </div>
+
           </li>
-        )
-      })}
-    </ul>
-  )
+        )}
+      </ul>
+      <button onClick={() => setNewItem(true)} className={styles.addButton}>
+        <AddIcon />
+      </button>
+    </>
+  );
 }
