@@ -12,11 +12,6 @@ client.config ({
 });
 
 export default async function imageUploadHandler(req: NextApiRequest, res: NextApiResponse) {
-  // const { _id, imageUpload} = req.body;
-
-  const filepath = './assets/test.png';
-  const id = "6b69e29c-4da7-4ab7-a0c3-3ea43f26cb95";
-
   const form = new formidable.IncomingForm({ keepExtensions: true });
   
   interface UploadFile {
@@ -27,14 +22,19 @@ export default async function imageUploadHandler(req: NextApiRequest, res: NextA
 
   form.parse(req, async(err, fields, files) => {
     const selectedFile = files.file as unknown as UploadFile;
+
+    const imageKey = fields?.key !== undefined ? `${fields?.name}[_key=="${fields?.key}"].image` : 'image';
+
+    console.log(imageKey)
+
     const response = await client.assets.upload('image', createReadStream(selectedFile.filepath), {
       contentType: selectedFile.mimeType,
       filename: selectedFile.originalFilename,
     }).then(imageAsset => {
       return client
-        .patch(fields.sanityId as string)
+        .patch(fields?.sanityId as string)
         .set({
-          image: {
+          [imageKey]: {
             _type: 'image',
             asset: {
               _type: "reference",

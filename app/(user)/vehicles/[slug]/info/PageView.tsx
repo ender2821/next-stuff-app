@@ -15,6 +15,7 @@ import PhotoUploadIcon from '../../../../../assets/upload-photo-icon.svg';
 import { useRouter, usePathname } from 'next/navigation';
 import useClickOutside from "../../../../../hooks/useClickOutside";
 import useImageHandler from "../../../../../hooks/useImageHandler";
+import useImageSubmit from "../../../../../hooks/useImageSubmit";
 
 type PageProps = {
   data: Vehicle,
@@ -29,6 +30,12 @@ export default function PageView(props:PageProps) {
   const { expanded: formExpanded, setExpanded: formSetExpanded, ref: formRef } = useClickOutside<HTMLFormElement>();
   const { expanded: imageExpanded, setExpanded: imageSetExpanded, ref: imageRef } = useClickOutside<HTMLDivElement>();
   const { images, setImages, imageURLs, setImageURLs} = useImageHandler();
+  const { imageSubmit } = useImageSubmit(images, data?._id, {
+    callback: () => {
+      setImages([]);
+      setImageURLs([]);
+    },
+  });
 
   useEffect(() => {
     setSecondaryLayout(true);
@@ -39,23 +46,24 @@ export default function PageView(props:PageProps) {
     setImages([...e.target.files as any ] as SetStateAction<never[]>)
   };
 
-  const onImageSubmit = async() => {
-    if(images.length < 1) return;
-    
-    const body = new FormData();
-    body.append("file", images[0]);
-    body.append("sanityId", data?._id);
 
-    await fetch('/api/_uploadImage', {
-      method: 'post',
-      body: body,
-    }).then(() => {
-      router.replace(path as string);
-    }).then(() => {
-      setImages([]);
-      setImageURLs([]);
-    }).catch((error) => console.log(error));
-  }
+  // const onImageSubmit = async() => {
+  //   if(images.length < 1) return;
+    
+  //   const body = new FormData();
+  //   body.append("file", images[0]);
+  //   body.append("sanityId", data?._id);
+
+  //   await fetch('/api/_uploadImage', {
+  //     method: 'post',
+  //     body: body,
+  //   }).then(() => {
+  //     router.replace(path as string);
+  //   }).then(() => {
+  //     setImages([]);
+  //     setImageURLs([]);
+  //   }).catch((error) => console.log(error));
+  // }
 
 
   // description handling 
@@ -106,7 +114,7 @@ export default function PageView(props:PageProps) {
             )}
             <label htmlFor="upload"></label>
             <input type="file" id="upload" accept="image/*" onChange={onImageChange} />
-            { images.length > 0 && <button onClick={onImageSubmit} className={styles.photoSubmitButton}><SubmitIconLight /></button>}
+            { images.length > 0 && <button onClick={imageSubmit} className={styles.photoSubmitButton}><SubmitIconLight /></button>}
           </div>
         )}
 

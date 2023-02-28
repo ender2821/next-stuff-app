@@ -12,6 +12,7 @@ import Image from "next/image";
 import Link from "next/link";
 import urlFor from "../lib/urlFor";
 import useImageHandler from "../hooks/useImageHandler";
+import useImageSubmit from "../hooks/useImageSubmit";
 
 type PageProps = {
   label?: string;
@@ -59,6 +60,12 @@ export default function SimpleListItem(props: PageProps) {
   });
 
   const { images, setImages, imageURLs, setImageURLs } = useImageHandler();
+  const { imageSubmit } = useImageSubmit(images, id, {
+    callback: () => {
+      setImages([]);
+      setImageURLs([]);
+    },
+  }, listName, itemKey,);
 
   // TODO: see if this can be refactored as a hook
   // const [expanded, setExpanded] = useState(false);
@@ -158,6 +165,7 @@ export default function SimpleListItem(props: PageProps) {
     link: string
   ) => {
     const handleSubmit = async () => {
+      imageSubmit();
       await fetch("/api/_updateComplexList", {
         method: "post",
         body: JSON.stringify({
