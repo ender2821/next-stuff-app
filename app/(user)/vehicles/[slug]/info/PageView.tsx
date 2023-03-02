@@ -125,7 +125,7 @@ export default function PageView(props:PageProps) {
             fill
           />
         ) : (
-          <Image
+          data?.image && <Image
             src={urlFor(data?.image).url()}
             alt={data?.name}
             fill

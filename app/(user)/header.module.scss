@@ -4,6 +4,8 @@
 .header {
   align-items: center;
   background: $mainElementBg;
+  border-bottom: 1px solid $headerBorder;
+  box-shadow: 0 15px 15px $headerDropShadow;
   displaY: flex;
   justify-content: center;
   height: 6rem;

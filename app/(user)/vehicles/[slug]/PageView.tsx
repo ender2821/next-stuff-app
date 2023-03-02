@@ -24,17 +24,18 @@ export default function PageView(props:PageProps) {
 
   useEffect(() => {
     setSecondaryLayout(true);
-    setTitleText(data.name);
-  }, [data.name, setSecondaryLayout, setTitleText])
+    setTitleText(data?.name);
+  }, [data?.name, setSecondaryLayout, setTitleText])
 
   return (
     <>
       <div className={styles.imageContain}>
-        <Image
+        {data?.image && <Image
           src={urlFor(data?.image).url()}
           alt={data?.name}
           fill
         />
+        }
       </div>
       <ul className={styles.linkList}>
         <li>

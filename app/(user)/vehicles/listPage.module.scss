@@ -16,6 +16,7 @@
 .listItem {
   align-items: center;
   background: $mainElementBg;
+  box-shadow: 0 4px 4px $mainDropshadow;
   border-radius: 5px;
   display: flex;
   padding: 1rem;
@@ -31,6 +32,11 @@
     border:none;
     cursor: pointer;
     margin-left: auto;
+  }
+
+  a {
+    display: flex;
+    flex: 1 0 auto;
   }
 }
 
@@ -50,15 +56,16 @@
   align-items: center;
   display: flex;
   flex: 1 0 auto;
-  padding-left: 2rem;
+  padding-left: 3rem;
 }
 
 .addButton {
   background: none;
   border: none;
-  bottom: 1rem;
+  bottom: 2rem;
   height: 4rem;
   position: fixed;
-  right: 1rem;
+  right: 2rem;
   width: 4rem;
 }
+
