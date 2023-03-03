@@ -2,7 +2,9 @@
 
 .imageContain {
   position: relative;
-  min-height: 300px;
+  min-height: 290px;
+  max-height: 290px;
+  overflow: hidden;
   width: 100%;
 
   img {
@@ -13,10 +15,6 @@
     width: 100%;
   }
 }
-
-
-
-// Todo: Move to component styles module
 
 .linkList {
   display: grid;
@@ -31,7 +29,8 @@
   a {
     align-items: center;
     background: $secondaryElementBg;
-    border-radius: 10px;
+    box-shadow: 0 1px 1px $secondaryDropShadow;
+    border-radius: 20px;
     display: flex;
     padding: 1rem;
     width: 100%;

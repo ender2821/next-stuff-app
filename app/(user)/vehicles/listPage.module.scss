@@ -1,5 +1,20 @@
 @import '../../../styles/vars.scss';
 
+
+.addSomeContain {
+  align-items: center;
+  display: flex;
+  height: calc(100vh - 6rem);
+  justify-content: center;
+  width: 100%;
+
+  p {
+    position: absolute;
+    opacity: 0;
+    left: -9999px;
+  }
+}
+
 .itemList {
   display: grid;
   grid-gap: 1rem;
@@ -38,6 +53,21 @@
     display: flex;
     flex: 1 0 auto;
   }
+
+  input {
+    background: none;
+    border: none;
+    border-bottom: 1px solid $mainInputBorderColor;
+    color: $mainText;
+    font-size: 1.6rem;
+    font-weight: 600;
+    max-width: 300px;
+    padding: 0.5rem 0.5rem 0.5rem 0;
+  }
+}
+
+.inputContain {
+  padding-right: 1rem;
 }
 
 .imageContain {
@@ -52,11 +82,27 @@
   }
 }
 
+.iconContain {
+  align-items: center;
+  background: $mainIconBackground;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  height: 8rem;
+  width: 8rem;
+}
+
+.newItem {
+  align-items: center;
+  display: flex;
+  width: 100%;
+}
+
 .content {
   align-items: center;
   display: flex;
   flex: 1 0 auto;
-  padding-left: 3rem;
+  padding-left: 2rem;
 }
 
 .addButton {
@@ -67,5 +113,6 @@
   position: fixed;
   right: 2rem;
   width: 4rem;
+  z-index: 2;
 }
 
