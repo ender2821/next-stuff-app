@@ -15,7 +15,7 @@ import styles from "./page.module.scss";
 import SimpleList from "../../../../../components/SimpleList";
 import SubmitIcon from "../../../../../assets/submit-icon.svg";
 import SubmitIconLight from "../../../../../assets/submit-icon-light.svg";
-import PhotoUploadIcon from "../../../../../assets/upload-photo-icon.svg";
+import VehicleIcon from "../../../../../assets/vehicle-icon-light.svg";
 import VehicleImage from "../../../../../assets/vehicle-image.svg";
 
 // import router from "next/router";
@@ -104,7 +104,7 @@ export default function PageView(props: PageProps) {
             {images.length == 0 && (
               <div className={styles.titleContain}>
                 <span className={styles.iconContain}>
-                  <PhotoUploadIcon />
+                  <VehicleIcon />
                 </span>
                 <p>Change Photo</p>
               </div>
