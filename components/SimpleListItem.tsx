@@ -13,6 +13,8 @@ import Link from "next/link";
 import urlFor from "../lib/urlFor";
 import useImageHandler from "../hooks/useImageHandler";
 import useImageSubmit from "../hooks/useImageSubmit";
+import useIconRender from "../hooks/useIconRender";
+import classNames from "classnames";
 
 type PageProps = {
   label?: string;
@@ -24,6 +26,7 @@ type PageProps = {
   id: string;
   itemKey: string;
   listName: "infoList" | "toDoList" | "specList" | "toBuyList" | "ownedList";
+  category?: 'vehicles' | 'tools' | 'gear' | 'life';
   onDelete: (key: string) => void;
 };
 
@@ -39,6 +42,7 @@ export default function SimpleListItem(props: PageProps) {
     link,
     image,
     onDelete,
+    category
   } = props;
   const router = useRouter();
   const path = usePathname();
@@ -66,26 +70,6 @@ export default function SimpleListItem(props: PageProps) {
       setImageURLs([]);
     },
   }, listName, itemKey,);
-
-  // TODO: see if this can be refactored as a hook
-  // const [expanded, setExpanded] = useState(false);
-  // const ref = useRef<HTMLDivElement>(null);
-
-  // useEffect(() => {
-  //   const handleClickOutside = (event: MouseEvent): void => {
-  //     if (ref.current && !ref.current.contains(event.target as Node)) {
-  //       setExpanded(false);
-  //       setFormText(item);
-  //       label && setFormLabel(label);
-  //     }
-  //   };
-  //   document.addEventListener('click', handleClickOutside, true);
-
-  //   return () => {
-  //     document.removeEventListener('click', handleClickOutside, true);
-  //   };
-  // }, [item, label]);
-  //
 
   useEffect(() => {
     setFormText(item);
@@ -150,6 +134,7 @@ export default function SimpleListItem(props: PageProps) {
       })
         .then(() => {
           router.replace(path as string);
+          // router.reload();
           setExpanded(false);
         })
         .catch((error) => console.log(error));
@@ -194,7 +179,7 @@ export default function SimpleListItem(props: PageProps) {
   return (
     <>
       {listName === "toBuyList" || listName === "ownedList" ? (
-        <li className={styles.listItem}>
+        <li className={classNames(styles.listItem, expanded && styles.expanded)}>
           <div
             className={styles.formContain}
             ref={ref}
@@ -213,7 +198,7 @@ export default function SimpleListItem(props: PageProps) {
                       <Image src={urlFor(image).url()} alt={item} fill />
                     ) : (
                       <div className={styles.photoPlaceholder}>
-                        <PhotoUploadIcon />
+                        {category && useIconRender(category)}
                       </div>
                     )}
                     <label htmlFor="upload"></label>
@@ -288,7 +273,7 @@ export default function SimpleListItem(props: PageProps) {
                       />
                     ) : (
                       <div className={styles.photoPlaceholder}>
-                        <PhotoUploadIcon />
+                        {category && useIconRender(category)}
                       </div>
                     )}
                   </div>
@@ -319,7 +304,7 @@ export default function SimpleListItem(props: PageProps) {
           )}
         </li>
       ) : (
-        <li className={styles.listItem}>
+        <li className={classNames(styles.listItem, expanded && styles.expanded)}>
           <div
             className={styles.formContain}
             ref={ref}

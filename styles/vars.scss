@@ -11,13 +11,16 @@ $green75: rgba(156,237,165, 0.75);
 
 $white: #fff;
 $darkgray: #0B3344;
+$darkgray20: rgba(11,51,68,0.2);
 $hotPink: #DD2AD6;
 $hotPink10: rgba(221,42,214, 0.1);
 $hotPink20: rgba(221,42,214, 0.2);
 $lightPink: #F89BF4;
 $lightGray: #F1F2F6;
+$lightishGray: #E7E8EE;
 $darkerGray: #012030;
 
+$color0: $darkgray20;
 $color1: $darkgray; 
 $color2: $darkBlue;
 $color3: $lightPink;
@@ -29,6 +32,7 @@ $color8: $lightGray;
 $color9: $darkerGray;
 $color10: $hotPink;
 $color11: $hotPink20;
+$color12: $lightishGray;
 
 $mainElementBg: $color1;
 $mainDropshadow: $color9;
@@ -38,7 +42,9 @@ $mainInputBorderColor: $color3;
 $secondaryPageBg: $color7;
 $secondaryText: $color2;
 $secondaryElementBg: $color8;
+$secondaryActiveBg: $color12;
 $secondaryDropShadow: $color11;
+$secondaryElementInnerShadow: $color0;
 $secondaryIconContainBg: $color6;
 $headerBorder: $color10;
 $headerDropShadow: $color11;

@@ -1,6 +1,7 @@
 import { useRouter, usePathname } from 'next/navigation';
 
 import AddIcon from '../assets/add-icon.svg';
+import AddSomeImage from '../assets/add-some-schit-image.svg';
 import styles from './SimpleList.module.scss';
 
 import SimpleListItem from './SimpleListItem';
@@ -9,10 +10,12 @@ type PageProps = {
   data: Array<any>
   id: string;
   listName: 'infoList' | 'toDoList' | 'specList' | 'toBuyList' | 'ownedList';
+  hasLabel?: boolean;
+  category?: 'vehicles' | 'tools' | 'gear' | 'life';
 }
 
 export default function SimpleList(props:PageProps) {
-  const { data, id, listName } = props;
+  const { data, id, listName, hasLabel, category } = props;
   const router = useRouter();
   const path = usePathname();
 
@@ -33,7 +36,7 @@ export default function SimpleList(props:PageProps) {
 
         await fetch('/api/_addListItem', {
           method: 'post',
-          body: JSON.stringify({ _id: id, name: listName, label: data && data[0]?.label ? 'New Item' : undefined}),
+          body: JSON.stringify({ _id: id, name: listName, label: hasLabel ? 'New Item' : undefined}),
         }).then(() => {
           router.replace(path as string);
         }).catch((error) => console.log(error));
@@ -46,11 +49,14 @@ export default function SimpleList(props:PageProps) {
       {data && data.length > 0 ? (
         data?.map((item, i: number) => {
           return(
-            <SimpleListItem {...item} key={i} itemKey={item?._key} id={id} onDelete={onDelete} listName={listName}/>
+            <SimpleListItem category={category} {...item} key={i} itemKey={item?._key} id={id} onDelete={onDelete} listName={listName}/>
           );
         })
       ) : (
+        <div className={styles.addSomeContain}>
         <p>Add some schit</p>
+          <AddSomeImage />
+        </div>
       )}
       <button onClick={onAdd} className={styles.addButton}><AddIcon/></button>
     </ul>

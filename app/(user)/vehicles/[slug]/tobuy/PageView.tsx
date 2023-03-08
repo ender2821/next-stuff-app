@@ -20,7 +20,7 @@ export default function PageView(props:PageProps) {
 
   return (
     <>
-      <SimpleList data={data?.toBuyList as List[]} listName={'toBuyList'} id={data?._id}/>
+      <SimpleList data={data?.toBuyList as List[]} category={'vehicles'} listName={'toBuyList'} id={data?._id}/>
     </>
   )
 }
