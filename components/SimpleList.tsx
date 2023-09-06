@@ -19,16 +19,15 @@ export default function SimpleList(props:PageProps) {
   const router = useRouter();
   const path = usePathname();
 
-  const onDelete = (key: string) => {
-    const handleDelete = async() => {
-        await fetch('/api/_deleteListItem', {
-          method: 'post',
-          body: JSON.stringify({ _id: id, key: key, name: listName}),
-        }).then(() => {
-          router.replace(path as string);
-        }).catch((error) => console.log(error));
-    };
-    handleDelete();
+  const onDelete = async(key: string) => {
+    await fetch('/api/_deleteListItem', {
+      method: 'post',
+      body: JSON.stringify({ _id: id, key: key, name: listName}),
+    })
+    .then(() => {
+      router.replace(path as string);
+    })
+    .catch((error) => console.log(error));
   }
 
   const onAdd = () => {
