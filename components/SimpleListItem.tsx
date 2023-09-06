@@ -176,6 +176,28 @@ export default function SimpleListItem(props: PageProps) {
     onDelete(itemKey);
   };
 
+  const handlePurchase = async() => {
+    await fetch("/api/_purchaseItem", {
+      method: "post",
+      body: JSON.stringify({
+        _id: id,
+        key: itemKey,
+        item: item,
+        price: price,
+        description: description,
+        link: link,
+        image: image,
+      }),
+    })
+    .then(() => {
+      onFormDelete();
+    })
+    .then(() => {
+      router.replace(path as string);
+    })
+    .catch((error) => console.log(error));
+  }
+
   return (
     <>
       {listName === "toBuyList" || listName === "ownedList" ? (
@@ -209,6 +231,7 @@ export default function SimpleListItem(props: PageProps) {
                       onChange={onImageChange}
                     />
                   </div>
+                  <button onClick={handlePurchase}>Purchase</button>
                   <div className={styles.inputsContain}>
                     <div className={styles.inputContain}>
                       <label htmlFor="item" className={styles.label}>

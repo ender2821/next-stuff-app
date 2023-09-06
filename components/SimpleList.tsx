@@ -33,7 +33,6 @@ export default function SimpleList(props:PageProps) {
 
   const onAdd = () => {
     const handleAdd = async() => {
-
         await fetch('/api/_addListItem', {
           method: 'post',
           body: JSON.stringify({ _id: id, name: listName, label: hasLabel ? 'New Item' : undefined}),

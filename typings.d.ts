@@ -13,6 +13,7 @@ interface Vehicle extends Base {
   toDoList?: Array<List>,
   specList?: Array<List>,
   toBuyList?: Array<List>,
+  ownedList?: Array<List>,
   description?: string,
 }
 
