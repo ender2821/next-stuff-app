@@ -1,0 +1,118 @@
+@import '../../../styles/vars.scss';
+
+
+.addSomeContain {
+  align-items: center;
+  display: flex;
+  height: calc(100vh - 6rem);
+  justify-content: center;
+  width: 100%;
+
+  p {
+    position: absolute;
+    opacity: 0;
+    left: -9999px;
+  }
+}
+
+.itemList {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: 1fr;
+  list-style: none;
+  margin: 0;
+  padding: 1rem;
+
+  @media screen and (min-width: $small) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.listItem {
+  align-items: center;
+  background: $mainElementBg;
+  box-shadow: 0 4px 4px $mainDropshadow;
+  border-radius: 5px;
+  display: flex;
+  padding: 1rem;
+  p{
+    color: $mainText;
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  button {
+    background: none;
+    border:none;
+    cursor: pointer;
+    margin-left: auto;
+  }
+
+  a {
+    display: flex;
+    flex: 1 0 auto;
+  }
+
+  input {
+    background: none;
+    border: none;
+    border-bottom: 1px solid $mainInputBorderColor;
+    color: $mainText;
+    font-size: 1.6rem;
+    font-weight: 600;
+    max-width: 300px;
+    padding: 0.5rem 0.5rem 0.5rem 0;
+  }
+}
+
+.inputContain {
+  padding-right: 1rem;
+}
+
+.imageContain {
+  border-radius: 5px;
+  height: 8rem;
+  overflow: hidden;
+  position: relative;
+  width: 8rem;
+
+  img {
+    object-fit: cover;
+  }
+}
+
+.iconContain {
+  align-items: center;
+  background: $mainIconBackground;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  height: 8rem;
+  width: 8rem;
+}
+
+.newItem {
+  align-items: center;
+  display: flex;
+  width: 100%;
+}
+
+.content {
+  align-items: center;
+  display: flex;
+  flex: 1 0 auto;
+  padding-left: 2rem;
+}
+
+.addButton {
+  background: none;
+  border: none;
+  bottom: 2rem;
+  height: 4rem;
+  position: fixed;
+  right: 2rem;
+  width: 4rem;
+  z-index: 2;
+}
+
