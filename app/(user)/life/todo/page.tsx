@@ -4,9 +4,9 @@ import React from "react";
 import { client } from "../../../../lib/sanity.client";
 import PageView from "./PageView";
 
-async function ToolsToDoPage() {
+async function LifeToDoPage() {
   const query = groq`
-    *[_type=='tools'][0]
+    *[_type=='life'][0]
     {
       _id,
       _createdAt,
@@ -15,11 +15,11 @@ async function ToolsToDoPage() {
     }
   `
 
-  const tools:Tools = await client.fetch(query);
+  const life:Life = await client.fetch(query);
   
   return (
-    <PageView data={tools}/>
+    <PageView data={life}/>
   )
 }
 
-export default ToolsToDoPage
+export default LifeToDoPage

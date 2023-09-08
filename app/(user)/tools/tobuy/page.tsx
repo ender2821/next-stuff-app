@@ -11,7 +11,6 @@ async function ToolsToDoPage() {
       _id,
       _createdAt,
       toBuyList,
-      slug,
       name    
     }
   `
