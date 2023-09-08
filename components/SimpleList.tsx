@@ -30,16 +30,14 @@ export default function SimpleList(props:PageProps) {
     .catch((error) => console.log(error));
   }
 
-  const onAdd = () => {
-    const handleAdd = async() => {
-        await fetch('/api/_addListItem', {
-          method: 'post',
-          body: JSON.stringify({ _id: id, name: listName, label: hasLabel ? 'New Item' : undefined}),
-        }).then(() => {
-          router.replace(path as string);
-        }).catch((error) => console.log(error));
-    };
-    handleAdd();
+  const onAdd = async() => {
+    await fetch('/api/_addListItem', {
+      method: 'post',
+      body: JSON.stringify({ _id: id, name: listName, label: hasLabel ? 'New Item' : undefined}),
+    }).then(() => {
+      console.log('REFRESH!')
+      router.replace(path as string);
+    }).catch((error) => console.log(error));
   }
 
   return (

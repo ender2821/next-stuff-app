@@ -13,11 +13,11 @@ const query = groq`
   }
 `;
 
-async function VehicleList() {
+async function GearList() {
   const gear = await client.fetch(query);
   return (
     <PageView data={gear} />
   )
 }
 
-export default VehicleList
+export default GearList

@@ -1,5 +1,8 @@
+"use client";
 
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
+import appContext from "../../lib/appContext";
+
 import Link from 'next/link';
 import styles from './main.module.scss';
 
@@ -9,6 +12,12 @@ import GearIcon from '../../assets/gear-icon.svg';
 import LifeIcon from '../../assets/life-icon.svg';
 
 function Home() {
+  const { setSecondaryLayout } = useContext(appContext);
+
+  useEffect(() => {
+    setSecondaryLayout(false);
+  }, [setSecondaryLayout]);
+
   return (
     <>
       <ul className={styles.homeLinks}>

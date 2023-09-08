@@ -27,6 +27,20 @@ interface Gear extends Base {
   description?: string,
 }
 
+interface Tools extends Base {
+  name: string,
+  toDoList?: Array<List>,
+  toBuyList?: Array<List>,
+  ownedList?: Array<List>,
+}
+
+interface Life extends Base {
+  name: string,
+  toDoList?: Array<List>,
+  toBuyList?: Array<List>,
+  ownedList?: Array<List>,
+}
+
 interface List {
   label: string,
   item: string,

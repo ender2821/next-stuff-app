@@ -11,7 +11,6 @@ import InfoIcon from "../../../../assets/info-icon.svg";
 import ToDoIcon from "../../../../assets/todo-icon.svg";
 import ToBuyIcon from "../../../../assets/tobuy-icon.svg";
 import OwnedIcon from "../../../../assets/owned-icon.svg";
-import SpecsIcon from "../../../../assets/specs-icon.svg";
 import VehicleImage from "../../../../assets/vehicle-image.svg";
 
 type PageProps = {
@@ -39,7 +38,7 @@ export default function PageView(props: PageProps) {
       </div>
       <ul className={styles.linkList}>
         <li>
-          <Link href={`/vehicles/${slug}/info`}>
+          <Link href={`/gear/${slug}/info`}>
             <span className={styles.iconContain}>
               <InfoIcon />
             </span>
@@ -47,7 +46,7 @@ export default function PageView(props: PageProps) {
           </Link>
         </li>
         <li>
-          <Link href={`/vehicles/${slug}/todo`}>
+          <Link href={`/gear/${slug}/todo`}>
             <span className={styles.iconContain}>
               <ToDoIcon />
             </span>
@@ -55,7 +54,7 @@ export default function PageView(props: PageProps) {
           </Link>
         </li>
         <li>
-          <Link href={`/vehicles/${slug}/tobuy`}>
+          <Link href={`/gear/${slug}/tobuy`}>
             <span className={styles.iconContain}>
               <ToBuyIcon />
             </span>
@@ -63,7 +62,7 @@ export default function PageView(props: PageProps) {
           </Link>
         </li>
         <li>
-          <Link href={`/vehicles/${slug}/owned`}>
+          <Link href={`/gear/${slug}/owned`}>
             <span className={styles.iconContain}>
               <OwnedIcon />
             </span>
