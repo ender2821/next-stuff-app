@@ -4,7 +4,7 @@ import { client } from "../../../lib/sanity.client";
 import PageView from './PageView';
 
 const query = groq`
-  *[_type == "vehicle"]{
+  *[_type == "gear"]{
     _createdAt,
     _id,
     name,
