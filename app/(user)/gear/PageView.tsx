@@ -6,13 +6,12 @@ import urlFor from "../../../lib/urlFor";
 import Image from "next/image";
 import Link from "next/link";
 import appContext from "../../../lib/appContext";
+import { iconRender } from "../../../helpers";
 
 import DeleteIcon from "../../../assets/delete-icon.svg";
 import SubmitIcon from "../../../assets/submit-icon-light.svg";
 import AddIcon from "../../../assets/add-icon.svg";
 import AddSomeImage from "../../../assets/add-some-schit-image-light.svg";
-
-import useIconRender from "../../../hooks/useIconRender";
 
 import styles from "./listPage.module.scss";
 
@@ -104,7 +103,7 @@ export default function PageView(props: PageProps) {
                       fill
                     />
                   ) : (
-                    <div className={styles.iconContain}>{useIconRender(path.slice(1))}</div>
+                    <div className={styles.iconContain}>{iconRender(path?.slice(1) || '')}</div>
                   )}
                 </div>
                 <div className={styles.content}>
@@ -120,7 +119,7 @@ export default function PageView(props: PageProps) {
         {newItem && (
           <li className={styles.listItem}>
             <div className={styles.newItem}>
-              <div className={styles.iconContain}>{useIconRender(path.slice(1))}</div>
+              <div className={styles.iconContain}>{iconRender(path?.slice(1) || '')}</div>
 
               <div className={styles.content}>
                 <div className={styles.inputContain}>

@@ -4,7 +4,6 @@ import styles from "./SimpleList.module.scss";
 import DeleteIcon from "../assets/secondary-delete-icon.svg";
 import ExternalLinkIcon from "../assets/external-link-icon.svg";
 import SubmitIcon from "../assets/submit-icon.svg";
-import PhotoUploadIcon from "../assets/photo-icon-dark.svg";
 
 import { useRouter, usePathname } from "next/navigation";
 import useClickOutside from "../hooks/useClickOutside";
@@ -13,8 +12,8 @@ import Link from "next/link";
 import urlFor from "../lib/urlFor";
 import useImageHandler from "../hooks/useImageHandler";
 import useImageSubmit from "../hooks/useImageSubmit";
-import useIconRender from "../hooks/useIconRender";
 import classNames from "classnames";
+import { iconRender } from "../helpers";
 
 type PageProps = {
   label?: string;
@@ -220,7 +219,7 @@ export default function SimpleListItem(props: PageProps) {
                       <Image src={urlFor(image).url()} alt={item} fill />
                     ) : (
                       <div className={styles.photoPlaceholder}>
-                        {category && useIconRender(category)}
+                        {category && iconRender(category)}
                       </div>
                     )}
                     <label htmlFor="upload"></label>
@@ -296,7 +295,7 @@ export default function SimpleListItem(props: PageProps) {
                       />
                     ) : (
                       <div className={styles.photoPlaceholder}>
-                        {category && useIconRender(category)}
+                        {category && iconRender(category)}
                       </div>
                     )}
                   </div>
