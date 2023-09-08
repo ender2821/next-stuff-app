@@ -212,25 +212,27 @@ export default function SimpleListItem(props: PageProps) {
                 className={styles.externalForm}
               >
                 <div className={styles.externalFormInputs} id="form">
-                  <div className={styles.imageContain}>
-                    {images.length > 0 ? (
-                      <Image src={imageURLs[0]} alt={item} fill />
-                    ) : image ? (
-                      <Image src={urlFor(image).url()} alt={item} fill />
-                    ) : (
-                      <div className={styles.photoPlaceholder}>
-                        {category && iconRender(category)}
-                      </div>
-                    )}
-                    <label htmlFor="upload"></label>
-                    <input
-                      type="file"
-                      id="upload"
-                      accept="image/*"
-                      onChange={onImageChange}
-                    />
+                  <div className={styles.purchaseContain}>
+                    <div className={styles.imageContain}>
+                      {images.length > 0 ? (
+                        <Image src={imageURLs[0]} alt={item} fill />
+                      ) : image ? (
+                        <Image src={urlFor(image).url()} alt={item} fill />
+                      ) : (
+                        <div className={styles.photoPlaceholder}>
+                          {category && iconRender(category)}
+                        </div>
+                      )}
+                      <label htmlFor="upload"></label>
+                      <input
+                        type="file"
+                        id="upload"
+                        accept="image/*"
+                        onChange={onImageChange}
+                      />
+                    </div>
+                    {listName === "toBuyList" && <button onClick={handlePurchase}>Purchase</button>}
                   </div>
-                  <button onClick={handlePurchase}>Purchase</button>
                   <div className={styles.inputsContain}>
                     <div className={styles.inputContain}>
                       <label htmlFor="item" className={styles.label}>

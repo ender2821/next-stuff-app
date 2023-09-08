@@ -192,3 +192,20 @@
     left: -9999px;
   }
 }
+
+.purchaseContain {
+  display: flex;
+  gap: 1rem;
+
+  button {
+    background: $buttonColor;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: 700;
+    height: 4rem;
+    padding: 0 1rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+}
