@@ -2,8 +2,8 @@
 import { getServerSession } from "next-auth";
 import { groq } from "next-sanity";
 import React from "react";
+import { authOptions } from "../../../../helpers";
 import { client } from "../../../../lib/sanity.client";
-import { authOptions } from "../../api/auth/[...nextauth]/route";
 import PageView from "./PageView";
 
 async function LifeToDoPage() {

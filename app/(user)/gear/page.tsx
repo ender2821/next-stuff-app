@@ -3,7 +3,7 @@ import { groq } from "next-sanity";
 import { client } from "../../../lib/sanity.client";
 import PageView from './PageView';
 import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/route";
+import { authOptions } from "../../../helpers";
 
 const query = groq`
   *[_type == "gear" && email == null]{
