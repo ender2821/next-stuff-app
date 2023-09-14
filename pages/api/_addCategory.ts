@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth";
 import { NextApiRequest, NextApiResponse } from "next/types";
-import { authOptions } from "../../app/(user)/api/auth/[...nextauth]/route";
+import { authOptions } from "../../helpers";
 import { client } from "../../lib/sanity.client";
 
 client.config ({
