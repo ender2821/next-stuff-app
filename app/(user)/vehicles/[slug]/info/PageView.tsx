@@ -85,7 +85,7 @@ export default function PageView(props: PageProps) {
         body: JSON.stringify({ _id: data?._id, text: text }),
       })
         .then(() => {
-          router.replace(path as string);
+          router.refresh();
           formSetExpanded(false);
         })
         .catch((error) => console.log(error));

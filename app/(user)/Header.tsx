@@ -36,7 +36,7 @@ export default function Header(props:HeaderProps) {
       </div>
       {session ? (
         <>
-          <button onClick={() => signOut()}><NoAccountsIcon /></button>
+          <button className={styles.login} onClick={() => signOut()}><NoAccountsIcon /></button>
         </> ) : (
         <>
           <button className={styles.login} onClick={() => signIn()}><PersonIcon /></button>

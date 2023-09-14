@@ -17,6 +17,7 @@ export default function PageView(props: PageProps) {
   const { data } = props;
   const { setSecondaryLayout, setTitleText } = useContext(appContext);
 
+  console.log(data)
   useEffect(() => {
     setSecondaryLayout(true);
     setTitleText(data?.name);

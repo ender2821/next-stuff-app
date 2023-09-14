@@ -25,7 +25,7 @@ const useImageSubmit = (
       body: body,
     })
       .then(() => {
-        router.replace(path as string);
+        router.refresh();
       })
       .then(() => {
         if (callback) callback();

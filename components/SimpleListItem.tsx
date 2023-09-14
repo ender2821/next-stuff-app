@@ -132,8 +132,7 @@ export default function SimpleListItem(props: PageProps) {
         }),
       })
         .then(() => {
-          router.replace(path as string);
-          // router.reload();
+          router.refresh();
           setExpanded(false);
         })
         .catch((error) => console.log(error));
@@ -163,7 +162,7 @@ export default function SimpleListItem(props: PageProps) {
         }),
       })
         .then(() => {
-          router.replace(path as string);
+          router.refresh();
           setExpanded(false);
         })
         .catch((error) => console.log(error));
@@ -192,7 +191,7 @@ export default function SimpleListItem(props: PageProps) {
       onFormDelete();
     })
     .then(() => {
-      router.replace(path as string);
+      router.refresh();
     })
     .catch((error) => console.log(error));
   }

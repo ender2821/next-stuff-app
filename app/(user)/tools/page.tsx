@@ -8,7 +8,7 @@ import PageView from "./PageView";
 
 async function ToolsPage() {
   const query = groq`
-  *[_type=='tools' && email == ""]
+  *[_type=='tools' && email == null]
   {
     _id,
     _createdAt,

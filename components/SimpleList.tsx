@@ -25,7 +25,7 @@ export default function SimpleList(props:PageProps) {
       body: JSON.stringify({ _id: id, key: key, name: listName}),
     })
     .then(() => {
-      router.replace(path as string);
+      router.refresh();
     })
     .catch((error) => console.log(error));
   }
@@ -35,8 +35,7 @@ export default function SimpleList(props:PageProps) {
       method: 'post',
       body: JSON.stringify({ _id: id, name: listName, label: hasLabel ? 'New Item' : undefined}),
     }).then(() => {
-      console.log('REFRESH!')
-      router.replace(path as string);
+      router.refresh();
     }).catch((error) => console.log(error));
   }
 

@@ -8,7 +8,7 @@ import PageView from "./PageView";
 
 async function LifePage() {
   const query = groq`
-  *[_type=='life' && email == ""]
+  *[_type=='life' && email == null]
   {
     _id,
     _createdAt,

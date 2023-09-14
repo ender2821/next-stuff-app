@@ -65,7 +65,7 @@ export default function PageView(props: PageProps) {
         .then(() => {
           setNewItem(false);
           setNewItemName("");
-          router.replace(path as string);
+          router.refresh();
         })
         .catch((error) => console.log(error));
     }
@@ -77,7 +77,7 @@ export default function PageView(props: PageProps) {
       body: JSON.stringify({ id: id }),
     })
       .then(() => {
-        router.replace(path as string);
+        router.refresh();
       })
       .catch((error) => console.log(error));
   };
