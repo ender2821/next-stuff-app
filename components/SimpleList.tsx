@@ -51,10 +51,14 @@ export default function SimpleList(props:PageProps) {
           );
         })
       ) : (
-        <div className={styles.addSomeContain}>
-        <p>Add some schit</p>
-          <AddSomeImage />
-        </div>
+        <>
+        {listName !== "infoList" && (
+          <div className={styles.addSomeContain}>
+          <p>Add some schit</p>
+            <AddSomeImage />
+          </div>
+          )}
+        </>
       )}
       <button onClick={onAdd} className={styles.addButton}><AddIcon/></button>
     </ul>

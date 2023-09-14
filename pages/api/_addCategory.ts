@@ -22,7 +22,7 @@ export default async function favoriteButtonHandler(req: NextApiRequest, res: Ne
       _type: 'slug',
       current: slug
     },
-    email: session ? session?.user?.email : '',
+    email: session ? session?.user?.email : null,
   }
 
   const data = await client.create(doc).catch((error) => console.log(error))

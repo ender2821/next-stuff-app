@@ -26,6 +26,11 @@
     width: 100%;
   }
 
+  p {
+    flex: 1 0 100%;
+    text-align: center;
+  }
+
   a {
     align-items: center;
     background: $mainElementBg;
@@ -38,6 +43,7 @@
     letter-spacing: 1px;
     padding: 2rem;
     text-transform: uppercase;
+    flex-wrap: wrap;
 
     @media screen and (min-width: $small) {
       height: auto;

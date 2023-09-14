@@ -10,8 +10,14 @@
   img {
     object-fit: cover;
   }
+
+  svg {
+    width: 100%;
+  }
+  
   @media screen and (min-width: $small) {
     max-width: 400px;
+    margin: 0 auto;
     width: 100%;
   }
 }

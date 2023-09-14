@@ -40,6 +40,7 @@ function Home() {
             <div className={styles.iconContain}>
               <VehicleIcon />
             </div>
+            <p>Vehicles</p>
           </Link>
         </li>
         <li>
@@ -47,6 +48,7 @@ function Home() {
             <div className={styles.iconContain}>
               <ToolsIcon />
             </div>
+            <p>Tools</p>
           </Link>
         </li>
         <li>
@@ -54,6 +56,7 @@ function Home() {
             <div className={styles.iconContain}>
               <GearIcon />
             </div>
+            <p>Gear</p>
           </Link>
         </li>
         <li>
@@ -61,6 +64,7 @@ function Home() {
             <div className={styles.iconContain}>
               <LifeIcon />
             </div>
+            <p>Life</p>
           </Link>
         </li>
       </ul>

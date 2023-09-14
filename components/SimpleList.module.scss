@@ -182,7 +182,7 @@
 .addSomeContain {
   align-items: center;
   display: flex;
-  height: calc(100vh - 6rem);
+  height: calc(100vh - 8rem);
   justify-content: center;
   width: 100%;
 
@@ -190,6 +190,10 @@
     position: absolute;
     opacity: 0;
     left: -9999px;
+  }
+
+  svg {
+    max-width: 400px;
   }
 }
 
