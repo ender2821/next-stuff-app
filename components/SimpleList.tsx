@@ -40,8 +40,6 @@ export default function SimpleList(props:PageProps) {
     }).catch((error) => console.log(error));
   }
 
-  console.log(data)
-
   return (
     <ul className={styles.list}>
       {data && data.length > 0 ? (

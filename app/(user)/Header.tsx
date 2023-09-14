@@ -6,9 +6,13 @@ import Logo from '../../assets/schit-logo.svg'
 import SecondaryLogo from '../../assets/schit-logo-secondary.svg';
 import BackIcon from '../../assets/back-icon.svg'
 import BackSecondaryIcon from '../../assets/back-secondary-icon.svg'
+import PersonIcon from '../../assets/person-icon.svg';
 
 import styles from './header.module.scss';
 import { useRouter, usePathname } from 'next/navigation';
+import { signIn, signOut, useSession } from 'next-auth/react';
+import urlFor from '../../lib/urlFor';
+import Image from "next/image";
 
 type HeaderProps = {
   className?: string;
@@ -20,6 +24,7 @@ export default function Header(props:HeaderProps) {
   const { className, secondaryLayout, titleText } = props
   const router = useRouter();
   const path = usePathname();
+  const { data: session } = useSession()
 
   return (
     <header className={classNames(styles.header, {[styles.headerSecondary]: className})}>
@@ -30,6 +35,16 @@ export default function Header(props:HeaderProps) {
         </Link>
         {titleText !== '' && <span className={styles.titleText}>{titleText}</span>}
       </div>
+      {session ? (
+        <>
+          <button onClick={() => signOut()}>
+            <Image src={urlFor(session?.user?.image).url()} alt={session?.user?.name || ""} fill />
+          </button>
+        </> ) : (
+        <>
+          <button className={styles.login} onClick={() => signIn()}><PersonIcon /></button>
+        </>
+      )}
     </header>
   )
 }

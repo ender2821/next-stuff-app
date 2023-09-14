@@ -25,8 +25,6 @@ export default async function imageUploadHandler(req: NextApiRequest, res: NextA
 
     const imageKey = fields?.key !== undefined ? `${fields?.name}[_key=="${fields?.key}"].image` : 'image';
 
-    console.log(imageKey)
-
     const response = await client.assets.upload('image', createReadStream(selectedFile.filepath), {
       contentType: selectedFile.mimeType,
       filename: selectedFile.originalFilename,
