@@ -7,12 +7,11 @@ import SecondaryLogo from '../../assets/schit-logo-secondary.svg';
 import BackIcon from '../../assets/back-icon.svg'
 import BackSecondaryIcon from '../../assets/back-secondary-icon.svg'
 import PersonIcon from '../../assets/person-icon.svg';
+import NoAccountsIcon from '../../assets/no-accounts-icon.svg';
 
 import styles from './header.module.scss';
 import { useRouter, usePathname } from 'next/navigation';
 import { signIn, signOut, useSession } from 'next-auth/react';
-import urlFor from '../../lib/urlFor';
-import Image from "next/image";
 
 type HeaderProps = {
   className?: string;
@@ -37,10 +36,7 @@ export default function Header(props:HeaderProps) {
       </div>
       {session ? (
         <>
-          <button onClick={() => signOut()}>
-            {/* <Image src={urlFor(session?.user?.image).url()} alt={session?.user?.name || ""} fill /> */}
-            Sign Out
-          </button>
+          <button onClick={() => signOut()}><NoAccountsIcon /></button>
         </> ) : (
         <>
           <button className={styles.login} onClick={() => signIn()}><PersonIcon /></button>
