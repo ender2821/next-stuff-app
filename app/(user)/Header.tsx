@@ -38,7 +38,8 @@ export default function Header(props:HeaderProps) {
       {session ? (
         <>
           <button onClick={() => signOut()}>
-            <Image src={urlFor(session?.user?.image).url()} alt={session?.user?.name || ""} fill />
+            {/* <Image src={urlFor(session?.user?.image).url()} alt={session?.user?.name || ""} fill /> */}
+            Sign Out
           </button>
         </> ) : (
         <>
