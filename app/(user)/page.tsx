@@ -10,16 +10,30 @@ import VehicleIcon from '../../assets/vehicle-icon.svg';
 import ToolsIcon from '../../assets/specs-icon.svg';
 import GearIcon from '../../assets/gear-icon.svg';
 import LifeIcon from '../../assets/life-icon.svg';
+import { signIn, signOut, useSession } from 'next-auth/react';
 
 function Home() {
-  const { setSecondaryLayout } = useContext(appContext);
+  const { setSecondaryLayout, setTitleText } = useContext(appContext);
 
   useEffect(() => {
     setSecondaryLayout(false);
-  }, [setSecondaryLayout]);
+    setTitleText("");
+  }, [setSecondaryLayout, setTitleText]);
 
+  const { data: session } = useSession()
+  console.log(session)
   return (
     <>
+      {session ? (
+        <>
+          Signed in as {session?.user?.email} <br />
+          <button onClick={() => signOut()}>Sign out</button>
+        </> ) : (
+        <>
+          Not signed in <br />
+          <button onClick={() => signIn()}>Sign in</button>
+        </>
+      )}
       <ul className={styles.homeLinks}>
         <li>
           <Link href="/vehicles">

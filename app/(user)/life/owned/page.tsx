@@ -1,12 +1,14 @@
 
+import { getServerSession } from "next-auth";
 import { groq } from "next-sanity";
 import React from "react";
 import { client } from "../../../../lib/sanity.client";
+import { authOptions } from "../../api/auth/[...nextauth]/route";
 import PageView from "./PageView";
 
 async function LifeToDoPage() {
   const query = groq`
-    *[_type=='life'][0]
+    *[_type=='life' && email == null]
     {
       _id,
       _createdAt,
@@ -15,10 +17,21 @@ async function LifeToDoPage() {
     }
   `
 
-  const life:Life = await client.fetch(query);
+  const session = await getServerSession(authOptions)
+
+  const sessionQuery = groq`
+  *[_type == "life" && email == "${session?.user?.email}"]{
+    _createdAt,
+    _id,
+    ownedList,
+    name,
+  }
+  `;
+
+  const life:Life[] = await client.fetch(session ? sessionQuery : query);
   
   return (
-    <PageView data={life}/>
+    <PageView data={life[0]}/>
   )
 }
 

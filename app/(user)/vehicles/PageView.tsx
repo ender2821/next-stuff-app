@@ -14,6 +14,7 @@ import AddSomeImage from "../../../assets/add-some-schit-image-light.svg";
 
 import styles from "./listPage.module.scss";
 import { iconRender } from "../../../helpers";
+import { useSession } from "next-auth/react";
 
 type ListPage = {
   slug: { current: string };

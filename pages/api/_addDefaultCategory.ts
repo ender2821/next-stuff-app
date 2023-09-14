@@ -11,18 +11,12 @@ client.config ({
 });
 
 export default async function favoriteButtonHandler(req: NextApiRequest, res: NextApiResponse) {
-  const {id, name, slug} = JSON.parse(req.body);
-  const session = await getServerSession(req, res, authOptions)
+  const {id, name, email} = JSON.parse(req.body);
 
   const doc = {
     _type: id,
     name: name,
-    description: '',
-    slug: {
-      _type: 'slug',
-      current: slug
-    },
-    email: session ? session?.user?.email : '',
+    email: email,
   }
 
   const data = await client.create(doc).catch((error) => console.log(error))

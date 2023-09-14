@@ -7,6 +7,7 @@ import Header from './Header'
 import appContext from '../../lib/appContext';
 import { Montserrat } from '@next/font/google';
 import classNames from 'classnames';
+import { SessionProvider } from "next-auth/react"
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -15,7 +16,7 @@ const montserrat = Montserrat({
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode,
 }) {
 
   const [secondaryLayout, setSecondaryLayout] = useState(false);
@@ -24,20 +25,22 @@ export default function RootLayout({
   return (
     <html>
       <head />
-      <appContext.Provider 
-        value={
-          {secondaryLayout, setSecondaryLayout, titleText, setTitleText}
-        }
-      >
-        <body className={montserrat.className}>
-          <Header className={secondaryLayout ? 'headerSecondary' : ''} secondaryLayout={secondaryLayout} titleText={titleText} />
-          <main className={classNames(styles.main, secondaryLayout && styles.mainSecondary)}>
-            <div className={styles.container}>
-              {children}
-            </div>
-          </main>
-        </body>
-      </appContext.Provider>
+      <SessionProvider>
+        <appContext.Provider 
+          value={
+            {secondaryLayout, setSecondaryLayout, titleText, setTitleText}
+          }
+        >
+          <body className={montserrat.className}>
+            <Header className={secondaryLayout ? 'headerSecondary' : ''} secondaryLayout={secondaryLayout} titleText={titleText} />
+            <main className={classNames(styles.main, secondaryLayout && styles.mainSecondary)}>
+              <div className={styles.container}>
+                {children}
+              </div>
+            </main>
+          </body>
+        </appContext.Provider>
+      </SessionProvider>
     </html>
   )
 }

@@ -11,6 +11,11 @@ export default defineType({
       type: "string"
     }),
     defineField({
+      name: "email",
+      title: "Email",
+      type: "string"
+    }),
+    defineField({
       name: "toDoList",
       title: "To Do",
       type: "array",
