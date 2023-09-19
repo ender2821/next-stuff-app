@@ -22,6 +22,7 @@ function Home() {
   return (
     <>
       <ul className={styles.homeLinks}>
+        <h1 className={styles.title}>System for Comprehensive Home Inventory and Tasks</h1>
         <li>
           <Link href="/vehicles">
             <div className={styles.iconContain}>
